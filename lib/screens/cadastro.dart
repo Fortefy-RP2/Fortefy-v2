@@ -3,7 +3,7 @@ import 'package:projetos/screens/aluno.dart';
 import 'package:projetos/screens/personal.dart';
 
 class CadastroScreen extends StatelessWidget {
-  final GlobalKey<FormState> loginKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> cadastroKey = GlobalKey<FormState>();
 
   CadastroScreen({super.key});
 
