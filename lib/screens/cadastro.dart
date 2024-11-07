@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:projetos/screens/aluno.dart';
 import 'package:projetos/screens/personal.dart';
 
-class Cadastro extends StatelessWidget {
+class CadastroScreen extends StatelessWidget {
   final GlobalKey<FormState> loginKey = GlobalKey<FormState>();
 
-  Cadastro({super.key});
+  CadastroScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
