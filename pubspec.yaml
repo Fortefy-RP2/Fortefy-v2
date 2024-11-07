@@ -63,9 +63,9 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
-      - moca.jpeg
-      - homem.jpeg
-      - fortefy_logo.png
+      - assets/moca.jpeg
+      - assets/homem.jpeg
+      - assets/fortefy_logo.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
