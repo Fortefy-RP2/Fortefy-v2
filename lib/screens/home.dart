@@ -6,7 +6,11 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
       backgroundColor: Color.fromARGB(255, 23, 93, 95),
+=======
+      backgroundColor: Colors.black,
+>>>>>>> cddcf3a (Tela de cadastro)
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:projetos/screens/cadastro.dart';
 import 'package:projetos/screens/configuracoes.dart';
 import 'package:projetos/screens/login.dart';
+=======
+>>>>>>> cddcf3a (Tela de cadastro)
 import 'screens/aluno.dart';
 import 'screens/personal.dart';
 import 'screens/start.dart';
@@ -27,6 +30,7 @@ class FortefyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //initialRoute: '/',
+<<<<<<< HEAD
       home: AlunoScreen(),
       routes: {
         '/start': (context) => StartWidget(),
@@ -35,6 +39,13 @@ class FortefyApp extends StatelessWidget {
         '/cadastro': (context) => CadastroScreen(),
         '/login' : (context) => LoginScreen(),
         '/configuracoes' : (context) => ConfiguracoesWidget()
+=======
+      home: StartScreen(),
+      routes: {
+        '/start': (context) => StartScreen(),
+        '/aluno': (context) => AlunoScreen(),
+        '/personal': (context) => PersonalScreen(),
+>>>>>>> cddcf3a (Tela de cadastro)
       },
     );
   }
