@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:projetos/screens/aluno.dart';
 import 'package:projetos/screens/personal.dart';
+import '../widgets/button.dart';
 
 class CadastroScreen extends StatelessWidget {
   final GlobalKey<FormState> cadastroKey = GlobalKey<FormState>();
 
+  final String aluno = 'Aluno';
+  final String personal = 'Personal';
   CadastroScreen({super.key});
 
   @override
@@ -44,28 +47,7 @@ class CadastroScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 8),
                         
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => AlunoScreen()),
-                            );
-                          },
-                          child: Text(
-                            'Aluno',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                        ButtonPadrao(texto: aluno, destino: AlunoScreen()),
                       ],
                     ),
                     SizedBox(width: 20),
@@ -82,28 +64,7 @@ class CadastroScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 8),
                         
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => PersonalScreen()),
-                            );
-                          },
-                          child: Text(
-                            'Personal',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                        ButtonPadrao(texto: personal, destino: PersonalScreen())
                       ],
                     )
                   ],
