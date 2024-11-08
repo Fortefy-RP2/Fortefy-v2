@@ -6,12 +6,13 @@ class StartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 23, 93, 95),
       appBar: AppBar(
         title: Text('Fortefy - Início'),
         backgroundColor: Colors.blueAccent,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0), 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -19,9 +20,11 @@ class StartScreen extends StatelessWidget {
             TextField(
               decoration: InputDecoration(
                 hintText: 'Digite o serviço desejado...',
+                hintStyle: TextStyle(color: Colors.white),
+                labelStyle: TextStyle(color: Colors.white),
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(30),
                 ),
               ),
             ),
