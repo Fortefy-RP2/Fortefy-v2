@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:projetos/screens/start.dart';
 import '../widgets/widgets.dart';
 
 class LoginScreen extends StatelessWidget {
   final GlobalKey<FormState> loginKey = GlobalKey<FormState>();
 
+  final String login = 'Entrar';
   LoginScreen({super.key});
 
   @override
@@ -40,6 +42,20 @@ class LoginScreen extends StatelessWidget {
                       buildTextField('Senha:'),
                       SizedBox(height: 20)
                     ],
+                  ),
+                ),
+                ButtonPadrao(texto: login, destino: StartScreen()),
+                SizedBox(height: 70),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/cadastro');
+                  },
+                  child: Text(
+                    'Não possui cadastro? Clique aqui.',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
                 ),
               ],
