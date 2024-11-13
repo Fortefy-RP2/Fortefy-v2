@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projetos/screens/aluno.dart';
 import 'package:projetos/screens/personal.dart';
-import '../widgets/button.dart';
+import '../widgets/widgets.dart';
 
 class CadastroScreen extends StatelessWidget {
   final GlobalKey<FormState> cadastroKey = GlobalKey<FormState>();
