@@ -66,7 +66,7 @@ class StartScreen extends StatelessWidget {
                 // Botão Configurações
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/cadastro');
+                    Navigator.pushNamed(context, '/configuracoes');
                   },
                   child: Column(
                     children: [
