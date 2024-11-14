@@ -7,10 +7,6 @@ class StartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 23, 93, 95),
-      appBar: AppBar(
-        title: Text('Fortefy - Início'),
-        backgroundColor: Colors.blueAccent,
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0), 
         child: Column(
