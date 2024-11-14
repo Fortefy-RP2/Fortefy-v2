@@ -44,7 +44,7 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                ButtonPadrao(texto: login, destino: StartScreen()),
+                ButtonPadrao(texto: login, destino: StartWidget()),
                 SizedBox(height: 70),
                 GestureDetector(
                   onTap: () {
