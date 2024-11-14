@@ -1,0 +1,198 @@
+import 'package:flutter/material.dart';
+import '../widgets/widgets.dart';
+import '../models/user.dart';
+import '../services/mock_user.dart';
+import '../utils/visibility.dart';
+
+class ConfiguracoesWidget extends StatefulWidget{
+  @override
+  _ConfiguracoesScreen createState() => _ConfiguracoesScreen();
+}
+
+class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
+
+  final User user = MockUser().getCurrentUser();
+  bool _isPasswordVisible = false;
+
+  void _togglePasswordVisible() {
+    VisibilityUtils.togglePasswordVisibility(
+      isVisible: _isPasswordVisible, 
+      onVisibilityChanged: (newVisibility) {
+        setState(() {
+          _isPasswordVisible = newVisibility;
+        });
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
+      backgroundColor: Color.fromARGB(255, 23, 93, 95),
+      body: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.9,
+          padding: EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircleAvatar(
+                radius: 40,
+                backgroundColor: Colors.white,
+                child: Icon(Icons.person, size: 50, color: Colors.black),
+              ),
+              SizedBox(height: 8),
+              TextButton(
+                onPressed: () {
+
+                },
+                child: Text(
+                  'Editar foto',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+              SizedBox(height: 8),
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Nome: ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    TextSpan(text: user.name),
+                  ],
+                ),
+                style: TextStyle(color: Colors.black),
+              ),
+              SizedBox(height: 4),
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Data de Nascimento: ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    TextSpan(text: user.birthDate),
+                  ],
+                ),
+                style: TextStyle(color: Colors.black),
+              ),
+              SizedBox(height: 4),
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'E-mail: ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    TextSpan(text: user.email),
+                  ],
+                ),
+                style: TextStyle(color: Colors.black),
+              ),
+              SizedBox(height: 4),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Senha: ',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(
+                          text: _isPasswordVisible ? user.password : '********',
+                        ),
+                      ],
+                    ),
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  SizedBox(width: 4),
+                  IconButton( 
+                    icon: Icon(
+                      _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                      size: 20,
+                    ),
+                    onPressed: _togglePasswordVisible,
+                  ),
+                ],
+              ),
+              SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 23, 93, 95),
+                      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Text(
+                      'Preferências',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 23, 93, 95),
+                      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Text(
+                      'Alterar senha',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings, color: Colors.white),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.fitness_center, color: Colors.white),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_box, color: Colors.white),
+            label: '',
+          ),
+        ],
+        backgroundColor: Color.fromARGB(255, 23, 93, 95),
+      ),
+    );
+  }
+}
