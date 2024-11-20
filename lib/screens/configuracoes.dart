@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../widgets/widgets.dart';
+import 'dart:io';
+//import '../widgets/widgets.dart';
 import '../models/user.dart';
-import '../services/mock_user.dart';
-import '../utils/visibility.dart';
+import '../services/services.dart';
+import '../utils/utils.dart';
 
 class ConfiguracoesWidget extends StatefulWidget{
   @override
@@ -13,6 +14,15 @@ class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
 
   final User user = MockUser().getCurrentUser();
   bool _isPasswordVisible = false;
+  File? _profileImage;
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    navigateToPage(context, index); // Chama a função utilitária de navegação
+  }
 
   void _togglePasswordVisible() {
     VisibilityUtils.togglePasswordVisibility(
@@ -23,6 +33,15 @@ class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
         });
       },
     );
+  }
+
+  Future<void> _selectProfileImage() async {
+    final File? selectedImage = await ImagePickerUtils.pickImageFromGallery();
+    if (selectedImage != null) {
+      setState(() {
+        _profileImage = selectedImage;
+      });
+    }
   }
 
   @override
@@ -51,13 +70,14 @@ class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
               CircleAvatar(
                 radius: 40,
                 backgroundColor: Colors.white,
-                child: Icon(Icons.person, size: 50, color: Colors.black),
+                backgroundImage: _profileImage != null ? FileImage(_profileImage!) : null,
+                child: _profileImage == null
+                    ? Icon(Icons.person, size: 50, color: Colors.black)
+                    : null,
               ),
               SizedBox(height: 8),
               TextButton(
-                onPressed: () {
-
-                },
+                onPressed: _selectProfileImage,
                 child: Text(
                   'Editar foto',
                   style: TextStyle(color: Colors.black),
@@ -180,18 +200,21 @@ class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.settings, color: Colors.white),
-            label: '',
+            label: 'Configurações',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.fitness_center, color: Colors.white),
-            label: '',
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_box, color: Colors.white),
-            label: '',
+            label: 'Chat',
           ),
         ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.white,
         backgroundColor: Color.fromARGB(255, 23, 93, 95),
+        onTap: _onItemTapped, // Usa a função de navegação utilitária
       ),
     );
   }
