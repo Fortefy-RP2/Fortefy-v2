@@ -35,7 +35,7 @@ class FortefyApp extends StatelessWidget {
         '/personal': (context) => PersonalScreen(),
         '/cadastro': (context) => CadastroScreen(),
         '/login' : (context) => LoginScreen(),
-        '/chats' : (context) => ChatHomeScreen(),
+        '/chat' : (context) => ChatWidget(),
         '/configuracoes' : (context) => ConfiguracoesWidget()
       },
     );

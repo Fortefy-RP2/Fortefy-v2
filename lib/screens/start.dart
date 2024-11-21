@@ -11,7 +11,7 @@ class StartWidget extends StatefulWidget{
 
 class _StartScreen extends State<StartWidget> {
 
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
     setState(() {
