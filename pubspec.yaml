@@ -75,9 +75,13 @@ flutter:
       - assets/moca.jpeg
       - assets/homem.jpeg
       - assets/fortefy_logo.png
+<<<<<<< HEAD
 =======
 
 >>>>>>> cddcf3a (Tela de cadastro)
+=======
+      - assets/logo.png
+>>>>>>> 3456ee3 (Alguns ajustes)
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
