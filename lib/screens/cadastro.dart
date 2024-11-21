@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:projetos/screens/aluno.dart';
 import 'package:projetos/screens/personal.dart';
 <<<<<<< HEAD
+=======
+import '../screens/screens.dart';
+>>>>>>> 0c648a8 (Arquivo de screens.dart)
 import '../widgets/widgets.dart';
 
 class CadastroScreen extends StatelessWidget {

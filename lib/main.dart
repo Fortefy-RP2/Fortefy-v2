@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import 'package:projetos/screens/cadastro.dart';
 import 'package:projetos/screens/configuracoes.dart';
 import 'package:projetos/screens/login.dart';
@@ -9,7 +10,10 @@ import 'screens/aluno.dart';
 import 'screens/personal.dart';
 import 'screens/start.dart';
 //import 'screens/configuracoes_screen.dart';
+=======
+>>>>>>> 0c648a8 (Arquivo de screens.dart)
 //import 'screens/chats_screen.dart';
+import './screens/screens.dart';
 
 void main() {
   runApp(FortefyApp());
