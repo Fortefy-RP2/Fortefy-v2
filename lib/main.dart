@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projetos/screens/cadastro.dart';
-import 'package:projetos/screens/configuracoes.dart';
-import 'package:projetos/screens/login.dart';
-import 'screens/aluno.dart';
-import 'screens/personal.dart';
-import 'screens/start.dart';
-//import 'screens/configuracoes_screen.dart';
 //import 'screens/chats_screen.dart';
+import './screens/screens.dart';
 
 void main() {
   runApp(FortefyApp());
