@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projetos/screens/aluno.dart';
-import 'package:projetos/screens/personal.dart';
+import '../screens/screens.dart';
 import '../widgets/widgets.dart';
 
 class CadastroScreen extends StatelessWidget {
