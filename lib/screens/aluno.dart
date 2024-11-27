@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projetos/main.dart';
 import 'package:postgres/postgres.dart';
 import 'package:projetos/database/database.dart';
+import '../widgets/textField.dart';
 
 
 class AlunoScreen extends StatefulWidget{
@@ -35,14 +36,14 @@ class formularioCustomizado extends State<AlunoScreen>{
     super.dispose();
   }
 
-  Future<void> _submitForm() async{
+  Future<bool> _submitForm() async{
     print('Botão apertado:');
 
     if(senhaController.text != confirmaSenhaController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('As senhas devem ser iguais')),
       );
-      return;
+      return false;
     }
 
       final userData = {
@@ -53,21 +54,27 @@ class formularioCustomizado extends State<AlunoScreen>{
         'senha': senhaController.text,
         'cpf': cpfController.text,
       };
+
     print('Estrutura montada, vai tentar inserir $userData');
     final DatabaseService dbservico =  await DatabaseService();
       try{
         await dbservico.connect();
-        await DatabaseService().insertAluno(userData);
+        if(!await DatabaseService().insertAluno(userData)){
+          return false;
+        }
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Cadastro realizado com sucesso')),
         );
+
       }catch(e){
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Erro ao cadastrar: $e')),
         );
+        return false;
       }finally{
         await dbservico.disconnect();
       }
+    return true;
   }
 
   @override
@@ -105,34 +112,38 @@ class formularioCustomizado extends State<AlunoScreen>{
                   child: Column(
                     children: [
                       // Campo Nome Completo
-                      _buildTextField('Nome:', nomeController),
+                      buildTextField('Nome:', nomeController),
                       SizedBox(height: 15),
 
-                      _buildTextField('Sobrenome:', sobrenomeController),
+                      buildTextField('Sobrenome:', sobrenomeController),
                       SizedBox(height: 15),
 
-                      _buildTextField('CPF:', cpfController),
+                      buildTextField('CPF:', cpfController),
                       SizedBox(height: 15),
 
                       // Campo Data de Nascimento
-                      _buildTextField('Data de nascimento:', nascimentoController),
+                      buildTextField('Data de nascimento:', nascimentoController),
                       SizedBox(height: 15),
 
                       // Campo Email
-                      _buildTextField('Email:', emailController),
+                      buildTextField('Email:', emailController),
                       SizedBox(height: 15),
 
                       // Campo Senha
-                      _buildTextField('Senha:', senhaController, obscureText: true),
+                      buildTextField('Senha:', senhaController, obscureText: true),
                       SizedBox(height: 15),
 
                       // Campo Repetir Senha
-                      _buildTextField('Repita sua senha:', confirmaSenhaController, obscureText: true),
+                      buildTextField('Repita sua senha:', confirmaSenhaController, obscureText: true),
                       SizedBox(height: 30),
 
                       // Botão Cadastrar
                       ElevatedButton(
-                        onPressed: _submitForm,
+                        onPressed: () async {
+                          if(await _submitForm()){
+                            Navigator.of(context, rootNavigator: true).pushNamed('/login');
+                          }
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
                           padding: EdgeInsets.symmetric(
@@ -172,27 +183,5 @@ class formularioCustomizado extends State<AlunoScreen>{
     );
   }
 
-  // Função para construir os campos de texto
-  Widget _buildTextField(String labelText, TextEditingController controller, {bool obscureText = false} ) {
-    return TextFormField(
-    controller: controller,
-      obscureText: obscureText,
-      decoration: InputDecoration(
-        labelText: labelText,
-        labelStyle: TextStyle(color: Colors.white),
-        filled: true,
-        fillColor: Colors.grey[800],
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      style: TextStyle(color: Colors.white),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Por favor, preencha este campo';
-        }
-        return null;
-      },
-    );
-  }
+
 }
