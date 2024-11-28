@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:projetos/screens/aluno.dart';
-import 'package:projetos/screens/personal.dart';
-<<<<<<< HEAD
-=======
 import '../screens/screens.dart';
->>>>>>> 0c648a8 (Arquivo de screens.dart)
 import '../widgets/widgets.dart';
 
 class CadastroScreen extends StatelessWidget {
@@ -14,13 +8,6 @@ class CadastroScreen extends StatelessWidget {
   final String aluno = 'Aluno';
   final String personal = 'Personal';
   CadastroScreen({super.key});
-=======
-
-class Cadastro extends StatelessWidget {
-  final GlobalKey<FormState> loginKey = GlobalKey<FormState>();
-
-  Cadastro({super.key});
->>>>>>> cddcf3a (Tela de cadastro)
 
   @override
   Widget build(BuildContext context) {
@@ -59,32 +46,7 @@ class Cadastro extends StatelessWidget {
                         ),
                         SizedBox(height: 8),
                         
-<<<<<<< HEAD
                         ButtonPadrao(texto: aluno, destino: AlunoScreen()),
-=======
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => AlunoScreen()),
-                            );
-                          },
-                          child: Text(
-                            'Aluno',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
->>>>>>> cddcf3a (Tela de cadastro)
                       ],
                     ),
                     SizedBox(width: 20),
@@ -101,32 +63,7 @@ class Cadastro extends StatelessWidget {
                         ),
                         SizedBox(height: 8),
                         
-<<<<<<< HEAD
                         ButtonPadrao(texto: personal, destino: PersonalScreen())
-=======
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => PersonalScreen()),
-                            );
-                          },
-                          child: Text(
-                            'Personal',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
->>>>>>> cddcf3a (Tela de cadastro)
                       ],
                     )
                   ],

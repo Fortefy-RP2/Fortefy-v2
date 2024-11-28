@@ -1,21 +1,6 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-import 'package:projetos/screens/cadastro.dart';
-import 'package:projetos/screens/configuracoes.dart';
-import 'package:projetos/screens/login.dart';
-=======
->>>>>>> cddcf3a (Tela de cadastro)
 import 'screens/aluno.dart';
-import 'screens/personal.dart';
-import 'screens/start.dart';
-//import 'screens/configuracoes_screen.dart';
-=======
->>>>>>> 0c648a8 (Arquivo de screens.dart)
-=======
 import 'package:projetos/widgets/busca.dart';
->>>>>>> 85a25d5 (Tela de busca incompleta)
 //import 'screens/chats_screen.dart';
 import './screens/screens.dart';
 
@@ -38,31 +23,15 @@ class FortefyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //initialRoute: '/',
-<<<<<<< HEAD
-<<<<<<< HEAD
-      home: AlunoScreen(),
-=======
       home: telaDeBusca(),
->>>>>>> 85a25d5 (Tela de busca incompleta)
       routes: {
-        '/start': (context) => StartWidget(),
+        '/home': (context) => HomeScreen(),
         '/aluno': (context) => AlunoScreen(),
         '/personal': (context) => PersonalScreen(),
         '/cadastro': (context) => CadastroScreen(),
         '/login' : (context) => LoginScreen(),
-<<<<<<< HEAD
-        '/configuracoes' : (context) => ConfiguracoesWidget()
-=======
-      home: StartScreen(),
-      routes: {
-        '/start': (context) => StartScreen(),
-        '/aluno': (context) => AlunoScreen(),
-        '/personal': (context) => PersonalScreen(),
->>>>>>> cddcf3a (Tela de cadastro)
-=======
         '/configuracoes' : (context) => ConfiguracoesWidget(),
         '/busca' : (context) => telaDeBusca()
->>>>>>> 85a25d5 (Tela de busca incompleta)
       },
     );
   }

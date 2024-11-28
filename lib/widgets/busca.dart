@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:projetos/widgets/textField.dart';
+import 'package:projetos/screens/login.dart';
+import 'package:projetos/widgets/widgets.dart';
+import 'package:projetos/utils/utils.dart';
 
 class telaDeBusca extends StatelessWidget {
   const telaDeBusca ({super.key});
@@ -32,7 +34,12 @@ class telaDeBusca extends StatelessWidget {
 
               Text('Selecione o destino buscado:'),
               buildTextField('Tipo de serviço:'),
-              SizedBox(height: 20)
+              SizedBox(height: 20),
+
+              GenderSelection(),
+              PriceSlider(),
+
+              ButtonPadrao(texto: 'Buscar', destino: LoginScreen())
             ],
           ),
         ),

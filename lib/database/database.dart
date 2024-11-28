@@ -11,8 +11,8 @@ class DatabaseService {
           host: 'localhost',
           port: 5432,
           database: 'fortefydb',
-          username: 'andre',
-          password: 'andre',
+          username: 'postgres',
+          password: 'fortefydb',
         ),
         settings: ConnectionSettings(
             sslMode: SslMode.disable,

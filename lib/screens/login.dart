@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projetos/screens/start.dart';
+import '../screens/screens.dart';
 import '../widgets/widgets.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -44,7 +44,7 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                ButtonPadrao(texto: login, destino: StartWidget()),
+                ButtonPadrao(texto: login, destino: HomeScreen()),
                 SizedBox(height: 70),
                 GestureDetector(
                   onTap: () {

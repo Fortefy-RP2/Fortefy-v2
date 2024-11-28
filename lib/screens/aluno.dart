@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:projetos/main.dart';
 import 'package:postgres/postgres.dart';
 import 'package:projetos/database/database.dart';
-
 
 class AlunoScreen extends StatefulWidget{
   const AlunoScreen({super.key});
@@ -70,22 +67,11 @@ class formularioCustomizado extends State<AlunoScreen>{
         await dbservico.disconnect();
       }
   }
-=======
-
-class AlunoScreen extends StatelessWidget {
-  final GlobalKey<FormState> alunoKey = GlobalKey<FormState>();
-
-  AlunoScreen({super.key});
->>>>>>> cddcf3a (Tela de cadastro)
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
       backgroundColor: Color.fromARGB(255, 23, 93, 95),
-=======
-      backgroundColor: Colors.black87,
->>>>>>> cddcf3a (Tela de cadastro)
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
@@ -117,7 +103,6 @@ class AlunoScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       // Campo Nome Completo
-<<<<<<< HEAD
                       _buildTextField('Nome:', nomeController),
                       SizedBox(height: 15),
 
@@ -141,30 +126,10 @@ class AlunoScreen extends StatelessWidget {
 
                       // Campo Repetir Senha
                       _buildTextField('Repita sua senha:', confirmaSenhaController, obscureText: true),
-=======
-                      _buildTextField('Nome completo:'),
-                      SizedBox(height: 15),
-
-                      // Campo Data de Nascimento
-                      _buildTextField('Data de nascimento:'),
-                      SizedBox(height: 15),
-
-                      // Campo Email
-                      _buildTextField('Email:'),
-                      SizedBox(height: 15),
-
-                      // Campo Senha
-                      _buildTextField('Senha:', obscureText: true),
-                      SizedBox(height: 15),
-
-                      // Campo Repetir Senha
-                      _buildTextField('Repita sua senha:', obscureText: true),
->>>>>>> cddcf3a (Tela de cadastro)
                       SizedBox(height: 30),
 
                       // Botão Cadastrar
                       ElevatedButton(
-<<<<<<< HEAD
                         onPressed: _submitForm,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
@@ -172,18 +137,6 @@ class AlunoScreen extends StatelessWidget {
                             horizontal: 80,
                             vertical: 15,
                           ),
-=======
-                        onPressed: () {
-                          // Ação ao clicar no botão Cadastrar
-                          if (alunoKey.currentState!.validate()) {
-                            // Processar cadastro
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue, // Cor do botão
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 80, vertical: 15),
->>>>>>> cddcf3a (Tela de cadastro)
                         ),
                         child: Text(
                           'Cadastrar',
@@ -196,11 +149,7 @@ class AlunoScreen extends StatelessWidget {
                       // Link para cadastro de personal
                       GestureDetector(
                         onTap: () {
-<<<<<<< HEAD
                           Navigator.of(context, rootNavigator: true).pushNamed('/personal');
-=======
-                          Navigator.pushNamed(context, '/personal');
->>>>>>> cddcf3a (Tela de cadastro)
                         },
                         child: Text(
                           'Você é personal? Clique aqui.',
@@ -222,14 +171,9 @@ class AlunoScreen extends StatelessWidget {
   }
 
   // Função para construir os campos de texto
-<<<<<<< HEAD
   Widget _buildTextField(String labelText, TextEditingController controller, {bool obscureText = false} ) {
     return TextFormField(
     controller: controller,
-=======
-  Widget _buildTextField(String labelText, {bool obscureText = false}) {
-    return TextFormField(
->>>>>>> cddcf3a (Tela de cadastro)
       obscureText: obscureText,
       decoration: InputDecoration(
         labelText: labelText,

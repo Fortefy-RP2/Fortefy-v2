@@ -1,46 +1,14 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import '../utils/utils.dart';
-//import '../widgets/widgets.dart';
-//import 'dart:io';
-//import '../services/services.dart';
-
-class StartWidget extends StatefulWidget{
-  @override
-  _StartScreen createState() => _StartScreen();
-}
-
-class _StartScreen extends State<StartWidget> {
-
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    navigateToPage(context, index); // Chama a função utilitária de navegação
-  }
-=======
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
->>>>>>> cddcf3a (Tela de cadastro)
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
       backgroundColor: Color.fromARGB(255, 23, 93, 95),
       body: Padding(
         padding: const EdgeInsets.all(16.0), 
-=======
-      appBar: AppBar(
-        title: Text('Fortefy - Início'),
-        backgroundColor: Colors.blueAccent,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
->>>>>>> cddcf3a (Tela de cadastro)
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -48,17 +16,11 @@ class StartScreen extends StatelessWidget {
             TextField(
               decoration: InputDecoration(
                 hintText: 'Digite o serviço desejado...',
-<<<<<<< HEAD
                 hintStyle: TextStyle(color: Colors.white),
                 labelStyle: TextStyle(color: Colors.white),
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
-=======
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
->>>>>>> cddcf3a (Tela de cadastro)
                 ),
               ),
             ),
@@ -92,31 +54,6 @@ class StartScreen extends StatelessWidget {
 
             // Espaço entre os itens e os botões
             SizedBox(height: 20),
-<<<<<<< HEAD
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings, color: Colors.white),
-            label: 'Configurações',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.fitness_center, color: Colors.white),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_box, color: Colors.white),
-            label: 'Chat',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.white,
-        backgroundColor: Color.fromARGB(255, 23, 93, 95),
-        onTap: _onItemTapped, // Usa a função de navegação utilitária
-      ),
-=======
 
             // Botões na parte inferior
             Row(
@@ -165,7 +102,6 @@ class StartScreen extends StatelessWidget {
           ],
         ),
       ),
->>>>>>> cddcf3a (Tela de cadastro)
     );
   }
 }
