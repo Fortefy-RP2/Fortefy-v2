@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/textField.dart';
 import 'package:projetos/database/database.dart';
+import '../models/usuario.dart';
 
 class PersonalScreen extends StatefulWidget {
   const PersonalScreen({super.key});
@@ -44,23 +45,23 @@ class PersonalScreenState extends State<PersonalScreen> {
       return false;
     }
 
-    final personalData = {
-      'nome': nomeController.text,
-      'sobrenome': sobrenomeController.text,
-      'data_nasc': nascimentoController.text,
-      'email': emailController.text,
-      'senha': senhaController.text,
-      'cpf': cpfController.text,
-      'cref': crefController.text
-    };
+    final personalData  = Usuario(
+        nome: nomeController.text,
+        sobrenome: sobrenomeController.text,
+        dataNasc: nascimentoController.text,
+        email: emailController.text,
+        senha: senhaController.text,
+        cpf: cpfController.text,
+        cref: crefController.text,
+    );
 
     print('Estrutura montada, vai tentar inserir $personalData');
-    final DatabaseService dbservico =  await DatabaseService();
     try{
-      await dbservico.connect();
-      if(!await DatabaseService().insertPersonal(personalData)){
+
+      if(!await DatabaseService().formularioCadastro(personalData)){
         return false;
       }
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Cadastro realizado com sucesso')),
       );
@@ -70,8 +71,6 @@ class PersonalScreenState extends State<PersonalScreen> {
         SnackBar(content: Text('Erro ao cadastrar: $e')),
       );
       return false;
-    }finally{
-      await dbservico.disconnect();
     }
     return true;
   }

@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:projetos/main.dart';
-import 'package:postgres/postgres.dart';
 import 'package:projetos/database/database.dart';
 import '../widgets/textField.dart';
+import '../models/usuario.dart';
 
 
 class AlunoScreen extends StatefulWidget{
   const AlunoScreen({super.key});
 
   @override
-  State<AlunoScreen> createState() => formularioCustomizado();
+  State<AlunoScreen> createState() => AlunoScreenState();
 }
 
 
-class formularioCustomizado extends State<AlunoScreen>{
+class AlunoScreenState extends State<AlunoScreen>{
   final GlobalKey<FormState> alunoKey = GlobalKey<FormState>();
 
   final cpfController = TextEditingController();
@@ -46,20 +45,19 @@ class formularioCustomizado extends State<AlunoScreen>{
       return false;
     }
 
-      final userData = {
-        'nome': nomeController.text,
-        'sobrenome': sobrenomeController.text,
-        'data_nasc': nascimentoController.text,
-        'email': emailController.text,
-        'senha': senhaController.text,
-        'cpf': cpfController.text,
-      };
+      final userData = Usuario(
+        nome: nomeController.text,
+        sobrenome: sobrenomeController.text,
+        dataNasc: nascimentoController.text,
+        email: emailController.text,
+        senha: senhaController.text,
+        cpf: cpfController.text,
+      );
 
     print('Estrutura montada, vai tentar inserir $userData');
-    final DatabaseService dbservico =  await DatabaseService();
+
       try{
-        await dbservico.connect();
-        if(!await DatabaseService().insertAluno(userData)){
+        if(!await DatabaseService().formularioCadastro(userData)){
           return false;
         }
         ScaffoldMessenger.of(context).showSnackBar(
@@ -71,8 +69,6 @@ class formularioCustomizado extends State<AlunoScreen>{
           SnackBar(content: Text('Erro ao cadastrar: $e')),
         );
         return false;
-      }finally{
-        await dbservico.disconnect();
       }
     return true;
   }

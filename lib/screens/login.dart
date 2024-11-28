@@ -35,7 +35,7 @@ class LoginScreenState extends State<LoginScreen> {
     print('Estrutura montada, vai tentar logar com os dados $userData');
     final DatabaseService dbservico =  await DatabaseService();
     try{
-      await dbservico.connect();
+      await dbservico.conectar();
       if(!await DatabaseService().login(userData)){
         return false;
       }
@@ -49,7 +49,7 @@ class LoginScreenState extends State<LoginScreen> {
       );
       return false;
     }finally{
-      await dbservico.disconnect();
+      await dbservico.desconectar();
     }
     return true;
   }
