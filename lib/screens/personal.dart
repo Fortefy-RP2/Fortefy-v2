@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:projetos/database/database.dart';
 import '../widgets/widgets.dart';
 
 class PersonalScreen extends StatelessWidget {
   final GlobalKey<FormState> personalKey = GlobalKey<FormState>();
 
   PersonalScreen({super.key});
+
+  final TextEditingController crefController = TextEditingController();
+  final TextEditingController nomeController = TextEditingController();
+  final TextEditingController dataNascimentoController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController senhaController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,35 +47,62 @@ class PersonalScreen extends StatelessWidget {
                   key: personalKey,
                   child: Column(
                     children: [
+                      // Campo CREF
+                      buildTextField('CREF:', controller: crefController),
+                      SizedBox(height: 15),
+
                       // Campo Nome Completo
-                      buildTextField('Nome completo:'),
+                      buildTextField('Nome completo:', controller: nomeController),
                       SizedBox(height: 15),
 
                       // Campo Data de Nascimento
-                      buildTextField('Data de nascimento:'),
+                      buildTextField('Data de nascimento:', controller: dataNascimentoController),
                       SizedBox(height: 15),
 
                       // Campo Email
-                      buildTextField('Email:'),
+                      buildTextField('Email:', controller: emailController),
                       SizedBox(height: 15),
 
                       // Campo Senha
-                      buildTextField('Senha:', obscureText: true),
-                      SizedBox(height: 15),
-
-                      // Campo Repetir Senha
-                      buildTextField('Repita sua senha:', obscureText: true),
-                      SizedBox(height: 15),
-
-                      // Campo CREF
-                      buildTextField('CREF:'),
+                      buildTextField('Senha:', obscureText: true, controller: senhaController),
                       SizedBox(height: 30),
 
                       // Botão Cadastrar
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (personalKey.currentState!.validate()) {
-                            // Processar cadastro
+                            final cref = crefController.text;
+                            final nome = nomeController.text;
+                            final dataNascimentoText = dataNascimentoController.text;
+                            final email = emailController.text;
+                            final senha = senhaController.text;
+
+                            // Validação adicional para evitar valores nulos ou vazios
+                            if (cref.isEmpty || nome.isEmpty || dataNascimentoText.isEmpty || email.isEmpty || senha.isEmpty) {
+                              print("Todos os campos devem ser preenchidos.");
+                              return;
+                            }
+
+                            DateTime? dataNascimento;
+                            try {
+                              // Tenta converter a data de nascimento para DateTime
+                              dataNascimento = DateTime.parse(dataNascimentoText);
+                            } catch (e) {
+                              print("Formato de data inválido. Use o formato YYYY-MM-DD.");
+                              return;
+                            }
+
+                            final personalData = {
+                              'cref': cref,
+                              'nome': nome,
+                              'data_nascimento': dataNascimento,
+                              'email': email,
+                              'senha': senha
+                            };
+
+                            // Envia os dados para o banco
+                            final dbService = DatabaseService();
+                            
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -89,29 +123,5 @@ class PersonalScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  // Função para construir os campos de texto
-  Widget _buildTextField(String labelText, {bool obscureText = false}) {
-    return TextFormField(
-      obscureText: obscureText,
-      decoration: InputDecoration(
-        labelText: labelText,
-        labelStyle: TextStyle(color: Colors.white),
-        filled: true,
-        fillColor: Colors.grey[800],
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      style: TextStyle(color: Colors.white),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Por favor, preencha este campo';
-        }
-        return null;
-      },
-    );
-  }
+    );  }
 }

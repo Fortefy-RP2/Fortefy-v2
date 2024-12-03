@@ -10,9 +10,9 @@ class DatabaseService {
         Endpoint(
           host: 'localhost',
           port: 5432,
-          database: 'fortefydb',
-          username: 'postgres',
-          password: 'fortefydb',
+          database: 'joao',
+          username: 'joao',
+          password: '130974',
         ),
         settings: ConnectionSettings(
             sslMode: SslMode.disable,
@@ -26,7 +26,12 @@ class DatabaseService {
   }
 
   Future<void> disconnect() async {
-    await _connection.close();
+    try {
+      await _connection.close();
+      print('Conexão com o bando de dados encerrada.');
+    } catch (e) {
+      print('Erro ao encerrar conexão: $e');
+    }
   }
 
   Future<void> insertAluno(Map<String, String> userData) async{
@@ -34,9 +39,9 @@ class DatabaseService {
       await connect();
       print('conectou');
 
-      await _connection!.execute(
+      await _connection.execute(
         Sql.named(
-          'INSERT INTO fortefyschema."usuario"(cpf, nome, sobrenome, data_nasc, email, senha) VALUES (@cpf, @nome, @sobrenome, @data_nasc, @email, @senha)',
+          'INSERT INTO fortefyschema.usuario(cpf, nome, sobrenome, data_nasc, email, senha) VALUES (@cpf, @nome, @sobrenome, @data_nasc, @email, @senha)',
         ),
         parameters: {
           'cpf': userData['cpf'],
@@ -55,5 +60,28 @@ class DatabaseService {
     }
   }
 
+  Future<Map<String, dynamic>?> login(String email, String senha) async {
+  try {
+    await connect();
+
+    // Consulta no banco de dados para verificar as credenciais
+    final result = await _connection.execute(
+      '''
+      SELECT cpf, nome, data_nasc, email
+      FROM usuario
+      WHERE email = @email AND senha = @senha
+      ''',
+      parameters: {
+        'email': email,
+        'senha': senha, // A senha deve estar criptografada
+      },
+    );
+  } catch (e) {
+    print('Erro ao realizar login: $e');
+    rethrow; // Propaga o erro para que possa ser tratado
+  } finally {
+    await disconnect();
+  }
+}
 
 }
