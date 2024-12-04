@@ -6,11 +6,13 @@ import '../services/services.dart';
 import '../utils/utils.dart';
 
 class ConfiguracoesWidget extends StatefulWidget{
+  const ConfiguracoesWidget({super.key});
+
   @override
-  _ConfiguracoesScreen createState() => _ConfiguracoesScreen();
+  ConfiguracoesScreen createState() => ConfiguracoesScreen();
 }
 
-class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
+class ConfiguracoesScreen extends State<ConfiguracoesWidget> {
 
   final Usuario user = MockUser().getCurrentUser();
   bool _isPasswordVisible = false;

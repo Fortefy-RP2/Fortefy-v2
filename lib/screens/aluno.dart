@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:projetos/database/database.dart';
-import '../widgets/textField.dart';
+import 'package:fortefy/database/database.dart';
+import '../widgets/text_field.dart';
 import '../models/usuario.dart';
+import 'package:flutter/foundation.dart';
 
-
-class AlunoScreen extends StatefulWidget{
+class AlunoScreen extends StatefulWidget {
   const AlunoScreen({super.key});
 
   @override
   State<AlunoScreen> createState() => AlunoScreenState();
 }
 
-
-class AlunoScreenState extends State<AlunoScreen>{
+class AlunoScreenState extends State<AlunoScreen> {
   final GlobalKey<FormState> alunoKey = GlobalKey<FormState>();
 
   final cpfController = TextEditingController();
@@ -24,7 +23,7 @@ class AlunoScreenState extends State<AlunoScreen>{
   final confirmaSenhaController = TextEditingController();
 
   @override
-  void dispose(){
+  void dispose() {
     cpfController.dispose();
     nomeController.dispose();
     sobrenomeController.dispose();
@@ -35,41 +34,44 @@ class AlunoScreenState extends State<AlunoScreen>{
     super.dispose();
   }
 
-  Future<bool> _submitForm() async{
-    print('Botão apertado:');
+  Future<bool> _submitForm() async {
+    if (kDebugMode) {
+      debugPrint('Botão apertado:');
+    }
 
-    if(senhaController.text != confirmaSenhaController.text) {
+    if (senhaController.text != confirmaSenhaController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('As senhas devem ser iguais')),
       );
       return false;
     }
 
-      final userData = Usuario(
-        nome: nomeController.text,
-        sobrenome: sobrenomeController.text,
-        dataNasc: nascimentoController.text,
-        email: emailController.text,
-        senha: senhaController.text,
-        cpf: cpfController.text,
-      );
+    final userData = Usuario(
+      nome: nomeController.text,
+      sobrenome: sobrenomeController.text,
+      dataNasc: nascimentoController.text,
+      email: emailController.text,
+      senha: senhaController.text,
+      cpf: cpfController.text,
+    );
 
-    print('Estrutura montada, vai tentar inserir $userData');
+    if (kDebugMode) {
+      debugPrint('Estrutura montada, vai tentar inserir $userData');
+    }
 
-      try{
-        if(!await DatabaseService().formularioCadastro(userData)){
-          return false;
-        }
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Cadastro realizado com sucesso')),
-        );
-
-      }catch(e){
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao cadastrar: $e')),
-        );
+    try {
+      if (!await DatabaseService().formularioCadastro(userData)) {
         return false;
       }
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Cadastro realizado com sucesso')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao cadastrar: $e')),
+      );
+      return false;
+    }
     return true;
   }
 
@@ -118,7 +120,8 @@ class AlunoScreenState extends State<AlunoScreen>{
                       SizedBox(height: 15),
 
                       // Campo Data de Nascimento
-                      buildTextField('Data de nascimento:', nascimentoController),
+                      buildTextField(
+                          'Data de nascimento:', nascimentoController),
                       SizedBox(height: 15),
 
                       // Campo Email
@@ -126,18 +129,22 @@ class AlunoScreenState extends State<AlunoScreen>{
                       SizedBox(height: 15),
 
                       // Campo Senha
-                      buildTextField('Senha:', senhaController, obscureText: true),
+                      buildTextField('Senha:', senhaController,
+                          obscureText: true),
                       SizedBox(height: 15),
 
                       // Campo Repetir Senha
-                      buildTextField('Repita sua senha:', confirmaSenhaController, obscureText: true),
+                      buildTextField(
+                          'Repita sua senha:', confirmaSenhaController,
+                          obscureText: true),
                       SizedBox(height: 30),
 
                       // Botão Cadastrar
                       ElevatedButton(
                         onPressed: () async {
-                          if(await _submitForm()){
-                            Navigator.of(context, rootNavigator: true).pushNamed('/login');
+                          if (await _submitForm()) {
+                            Navigator.of(context, rootNavigator: true)
+                                .pushNamed('/login');
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -158,7 +165,8 @@ class AlunoScreenState extends State<AlunoScreen>{
                       // Link para cadastro de personal
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context, rootNavigator: true).pushNamed('/personal');
+                          Navigator.of(context, rootNavigator: true)
+                              .pushNamed('/personal');
                         },
                         child: Text(
                           'Você é personal? Clique aqui.',
@@ -178,6 +186,4 @@ class AlunoScreenState extends State<AlunoScreen>{
       ),
     );
   }
-
-
 }

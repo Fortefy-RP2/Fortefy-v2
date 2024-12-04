@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:projetos/screens/start.dart';
+//import 'start.dart';
 import '../widgets/widgets.dart';
-import 'package:projetos/database/database.dart';
+import '../database/database.dart';
+import 'package:flutter/foundation.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -18,37 +19,38 @@ class LoginScreenState extends State<LoginScreen> {
   final senhaController = TextEditingController();
 
   @override
-  void dispose(){
+  void dispose() {
     emailController.dispose();
     senhaController.dispose();
     super.dispose();
   }
 
-  Future<bool> _submitLogin() async{
-    print('Botão apertado:');
-
+  Future<bool> _submitLogin() async {
+    if (kDebugMode) {
+      debugPrint('Botão apertado:');
+    }
     final userData = {
       'email': emailController.text,
       'senha': senhaController.text,
     };
-
-    print('Estrutura montada, vai tentar logar com os dados $userData');
-    final DatabaseService dbservico =  await DatabaseService();
-    try{
+    if (kDebugMode) {
+      debugPrint('Estrutura montada, vai tentar logar com os dados $userData');
+    }
+    final DatabaseService dbservico = DatabaseService();
+    try {
       await dbservico.conectar();
-      if(!await DatabaseService().login(userData)){
+      if (!await DatabaseService().login(userData)) {
         return false;
       }
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Login realizado com sucesso!')),
       );
-
-    }catch(e){
+    } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Erro ao logar: $e')),
       );
       return false;
-    }finally{
+    } finally {
       await dbservico.desconectar();
     }
     return true;
@@ -65,50 +67,46 @@ class LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  children: [
-                  Expanded( 
-                    child: 
-                      Image.asset(
-                        'assets/fortefy_logo.png',
-                        fit: BoxFit.contain,
-                      ),
-                    )
-                  ]
-                ),
+                Row(children: [
+                  Expanded(
+                    child: Image.asset(
+                      'assets/fortefy_logo.png',
+                      fit: BoxFit.contain,
+                    ),
+                  )
+                ]),
                 SizedBox(height: 20),
-
                 Form(
                   key: loginKey,
                   child: Column(
                     children: [
                       buildTextField('Email:', emailController),
                       SizedBox(height: 20),
-
-                      buildTextField('Senha:', senhaController, obscureText: true),
+                      buildTextField('Senha:', senhaController,
+                          obscureText: true),
                       SizedBox(height: 20)
                     ],
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () async {
-                    if (loginKey.currentState!.validate()) {
-                      if(await _submitLogin()){
-                        Navigator.of(context, rootNavigator: true).pushNamed('/start');
+                    onPressed: () async {
+                      if (loginKey.currentState!.validate()) {
+                        if (await _submitLogin()) {
+                          Navigator.of(context, rootNavigator: true)
+                              .pushNamed('/start');
+                        }
                       }
-                    }
-                  },
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
                       foregroundColor: Colors.white,
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
-                          side: BorderSide(color: Colors.blueAccent, width: 2)
-                      ),
+                          side: BorderSide(color: Colors.blueAccent, width: 2)),
                     ),
-                    child: Text(login)
-                ),
+                    child: Text(login)),
                 SizedBox(height: 70),
                 GestureDetector(
                   onTap: () {

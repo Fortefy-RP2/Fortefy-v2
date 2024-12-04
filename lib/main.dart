@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:projetos/screens/cadastro.dart';
-import 'package:projetos/screens/configuracoes.dart';
-import 'package:projetos/screens/login.dart';
+import 'screens/cadastro.dart';
+import 'screens/configuracoes.dart';
+import 'screens/login.dart';
 import 'screens/aluno.dart';
 import 'screens/personal.dart';
 import 'screens/start.dart';
@@ -33,10 +33,9 @@ class FortefyApp extends StatelessWidget {
         '/aluno': (context) => AlunoScreen(),
         '/personal': (context) => PersonalScreen(),
         '/cadastro': (context) => CadastroScreen(),
-        '/login' : (context) => LoginScreen(),
-        '/configuracoes' : (context) => ConfiguracoesWidget()
+        '/login': (context) => LoginScreen(),
+        '/configuracoes': (context) => ConfiguracoesWidget(),
       },
     );
   }
 }
-

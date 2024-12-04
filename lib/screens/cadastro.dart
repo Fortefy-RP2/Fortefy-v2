@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projetos/screens/aluno.dart';
-import 'package:projetos/screens/personal.dart';
+import 'package:fortefy/screens/aluno.dart';
+import 'package:fortefy/screens/personal.dart';
 import '../widgets/widgets.dart';
 
 class CadastroScreen extends StatelessWidget {

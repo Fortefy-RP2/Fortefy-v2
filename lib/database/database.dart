@@ -1,12 +1,13 @@
 import 'package:postgres/postgres.dart';
 import '../models/usuario.dart';
+import 'dart:developer';
 
 class DatabaseService {
   late Connection _connection;
 
   Future<void> conectar() async{
     try {
-      print('Prestes a conectar:');
+      log('Prestes a conectar:');
       _connection = await Connection.open(
         Endpoint(
           host: 'localhost',
@@ -19,9 +20,9 @@ class DatabaseService {
             sslMode: SslMode.disable,
             connectTimeout: const Duration(seconds: 10)),
       );
-      print('conectou');
+      log('conectou');
     } catch (e){
-      print('erro $e');
+      log('erro $e');
     }
 
   }
@@ -33,7 +34,7 @@ class DatabaseService {
 
   Future<bool> formularioCadastro(Usuario userData) async{
 
-    print('Estrutura montada, vai tentar inserir $userData');
+    log('Estrutura montada, vai tentar inserir $userData');
     try{
 
       if(!await insertUsuario(userData)){
@@ -47,7 +48,7 @@ class DatabaseService {
       }
 
     }catch(e){
-      print('Erro ao inserir usuario: $e');
+      log('Erro ao inserir usuario: $e');
       return false;
     }
     return true;
@@ -72,7 +73,7 @@ class DatabaseService {
       );
 
     }catch(e){
-      print('Erro ao inserir usuario: $e');
+      log('Erro ao inserir usuario: $e');
       return false;
     }finally{
       await _connection.close();
@@ -103,7 +104,7 @@ class DatabaseService {
       }
 
     }catch(e){
-      print('Erro ao logar usuario: $e');
+      log('Erro ao logar usuario: $e');
       return false;
     }finally{
       await _connection.close();
@@ -127,7 +128,7 @@ class DatabaseService {
       );
 
     }catch(e){
-      print('Erro ao inserir personal: $e');
+      log('Erro ao inserir personal: $e');
       return false;
     }finally{
       await _connection.close();

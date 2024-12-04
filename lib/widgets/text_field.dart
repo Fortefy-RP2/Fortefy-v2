@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-Widget buildTextField(String labelText, TextEditingController controller, {bool obscureText = false} ) {
+Widget buildTextField(String labelText, TextEditingController controller,
+    {bool obscureText = false}) {
   return TextFormField(
     controller: controller,
     obscureText: obscureText,

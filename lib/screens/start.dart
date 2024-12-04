@@ -5,11 +5,13 @@ import '../utils/utils.dart';
 //import '../services/services.dart';
 
 class StartWidget extends StatefulWidget{
+  const StartWidget({super.key});
+
   @override
-  _StartScreen createState() => _StartScreen();
+  StartScreen createState() => StartScreen();
 }
 
-class _StartScreen extends State<StartWidget> {
+class StartScreen extends State<StartWidget> {
 
   int _selectedIndex = 0;
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../widgets/textField.dart';
-import 'package:projetos/database/database.dart';
+import '../widgets/text_field.dart';
+import '../database/database.dart';
 import '../models/usuario.dart';
+import 'package:flutter/foundation.dart';
 
 class PersonalScreen extends StatefulWidget {
   const PersonalScreen({super.key});
@@ -23,7 +24,7 @@ class PersonalScreenState extends State<PersonalScreen> {
   final confirmaSenhaController = TextEditingController();
 
   @override
-  void dispose(){
+  void dispose() {
     cpfController.dispose();
     nomeController.dispose();
     sobrenomeController.dispose();
@@ -35,38 +36,41 @@ class PersonalScreenState extends State<PersonalScreen> {
     super.dispose();
   }
 
-  Future<bool> _submitForm() async{
-    print('Botão apertado:');
+  Future<bool> _submitForm() async {
+    if (kDebugMode) {
+      debugPrint('Botão apertado:');
+    }
 
-    if(senhaController.text != confirmaSenhaController.text) {
+    if (senhaController.text != confirmaSenhaController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('As senhas devem ser iguais')),
       );
       return false;
     }
 
-    final personalData  = Usuario(
-        nome: nomeController.text,
-        sobrenome: sobrenomeController.text,
-        dataNasc: nascimentoController.text,
-        email: emailController.text,
-        senha: senhaController.text,
-        cpf: cpfController.text,
-        cref: crefController.text,
+    final personalData = Usuario(
+      nome: nomeController.text,
+      sobrenome: sobrenomeController.text,
+      dataNasc: nascimentoController.text,
+      email: emailController.text,
+      senha: senhaController.text,
+      cpf: cpfController.text,
+      cref: crefController.text,
     );
 
-    print('Estrutura montada, vai tentar inserir $personalData');
-    try{
+    if (kDebugMode) {
+      debugPrint('Estrutura montada, vai tentar inserir $personalData');
+    }
 
-      if(!await DatabaseService().formularioCadastro(personalData)){
+    try {
+      if (!await DatabaseService().formularioCadastro(personalData)) {
         return false;
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Cadastro realizado com sucesso')),
       );
-
-    }catch(e){
+    } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Erro ao cadastrar: $e')),
       );
@@ -75,6 +79,7 @@ class PersonalScreenState extends State<PersonalScreen> {
     return true;
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 23, 93, 95),
@@ -119,7 +124,8 @@ class PersonalScreenState extends State<PersonalScreen> {
                       SizedBox(height: 15),
 
                       // Campo Data de Nascimento
-                      buildTextField('Data de nascimento:', nascimentoController),
+                      buildTextField(
+                          'Data de nascimento:', nascimentoController),
                       SizedBox(height: 15),
 
                       // Campo Email
@@ -127,11 +133,14 @@ class PersonalScreenState extends State<PersonalScreen> {
                       SizedBox(height: 15),
 
                       // Campo Senha
-                      buildTextField('Senha:', senhaController, obscureText: true),
+                      buildTextField('Senha:', senhaController,
+                          obscureText: true),
                       SizedBox(height: 15),
 
                       // Campo Repetir Senha
-                      buildTextField('Repita sua senha:', confirmaSenhaController, obscureText: true),
+                      buildTextField(
+                          'Repita sua senha:', confirmaSenhaController,
+                          obscureText: true),
                       SizedBox(height: 15),
 
                       // Campo CREF
@@ -140,9 +149,10 @@ class PersonalScreenState extends State<PersonalScreen> {
 
                       // Botão Cadastrar
                       ElevatedButton(
-                        onPressed:  () async {
-                          if(await _submitForm()){
-                            Navigator.of(context, rootNavigator: true).pushNamed('/login');
+                        onPressed: () async {
+                          if (await _submitForm()) {
+                            Navigator.of(context, rootNavigator: true)
+                                .pushNamed('/login');
                           }
                         },
                         style: ElevatedButton.styleFrom(
