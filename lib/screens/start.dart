@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../screens/screens.dart';
 import '../utils/utils.dart';
+import '../widgets/widgets.dart';
+
 
 class StartScreen extends StatefulWidget{
   @override
@@ -29,6 +31,15 @@ class _StartScreen extends State<StartScreen> {
           children: [
             // Campo de busca
             TextField(
+              readOnly: true,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => telaDeBusca()
+                  ) 
+                );
+              },
               decoration: InputDecoration(
                 hintText: 'Digite o serviço desejado...',
                 hintStyle: TextStyle(color: Colors.white),
