@@ -1,19 +1,82 @@
 import 'package:flutter/material.dart';
 import 'package:projetos/screens/screens.dart';
 import '../widgets/widgets.dart';
+import '../widgets/textField.dart';
+import 'package:projetos/database/database.dart';
+import '../models/usuario.dart';
 
-class PersonalScreen extends StatelessWidget {
-  final GlobalKey<FormState> personalKey = GlobalKey<FormState>();
-
-  PersonalScreen({super.key});
-
-  final TextEditingController crefController = TextEditingController();
-  final TextEditingController nomeController = TextEditingController();
-  final TextEditingController dataNascimentoController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController senhaController = TextEditingController();
+class PersonalScreen extends StatefulWidget {
+  const PersonalScreen({super.key});
 
   @override
+  State<PersonalScreen> createState() => PersonalScreenState();
+}
+
+class PersonalScreenState extends State<PersonalScreen> {
+  final GlobalKey<FormState> personalKey = GlobalKey<FormState>();
+
+  final crefController = TextEditingController();
+  final cpfController = TextEditingController();
+  final nomeController = TextEditingController();
+  final sobrenomeController = TextEditingController();
+  final nascimentoController = TextEditingController();
+  final emailController = TextEditingController();
+  final senhaController = TextEditingController();
+  final confirmaSenhaController = TextEditingController();
+
+  @override
+  void dispose(){
+    cpfController.dispose();
+    nomeController.dispose();
+    sobrenomeController.dispose();
+    nascimentoController.dispose();
+    emailController.dispose();
+    senhaController.dispose();
+    confirmaSenhaController.dispose();
+    crefController.dispose();
+    super.dispose();
+  }
+
+  Future<bool> _submitForm() async{
+    print('Botão apertado:');
+
+    if(senhaController.text != confirmaSenhaController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('As senhas devem ser iguais')),
+      );
+      return false;
+    }
+
+    final personalData  = Usuario(
+        nome: nomeController.text,
+        sobrenome: sobrenomeController.text,
+        dataNasc: nascimentoController.text,
+        email: emailController.text,
+        senha: senhaController.text,
+        cpf: cpfController.text,
+        cref: crefController.text,
+    );
+
+    print('Estrutura montada, vai tentar inserir $personalData');
+    try{
+
+      if(!await DatabaseService().formularioCadastro(personalData)){
+        return false;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Cadastro realizado com sucesso')),
+      );
+
+    }catch(e){
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao cadastrar: $e')),
+      );
+      return false;
+    }
+    return true;
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 23, 93, 95),
@@ -47,16 +110,18 @@ class PersonalScreen extends StatelessWidget {
                   key: personalKey,
                   child: Column(
                     children: [
-                      // Campo CREF
-                      buildTextField('CREF', crefController),
+                      // Campo Nome Completo
+                      buildTextField('Nome:', nomeController),
                       SizedBox(height: 15),
 
-                      // Campo Nome Completo
-                      buildTextField('Nome completo:', nomeController),
+                      buildTextField('Sobrenome:', sobrenomeController),
+                      SizedBox(height: 15),
+
+                      buildTextField('CPF:', cpfController),
                       SizedBox(height: 15),
 
                       // Campo Data de Nascimento
-                      buildTextField('Data de nascimento:', dataNascimentoController),
+                      buildTextField('Data de nascimento:', nascimentoController),
                       SizedBox(height: 15),
 
                       // Campo Email
@@ -64,11 +129,34 @@ class PersonalScreen extends StatelessWidget {
                       SizedBox(height: 15),
 
                       // Campo Senha
-                      buildTextField('Senha:', obscureText: true, senhaController),
+                      buildTextField('Senha:', senhaController, obscureText: true),
+                      SizedBox(height: 15),
+
+                      // Campo Repetir Senha
+                      buildTextField('Repita sua senha:', confirmaSenhaController, obscureText: true),
+                      SizedBox(height: 15),
+
+                      // Campo CREF
+                      buildTextField('CREF:', crefController),
                       SizedBox(height: 30),
 
-                      ButtonPadrao(texto: 'Cadastrar', destino: StartScreen()),
-                      SizedBox(height: 15),
+                      // Botão Cadastrar
+                      ElevatedButton(
+                        onPressed:  () async {
+                          if(await _submitForm()){
+                            Navigator.of(context, rootNavigator: true).pushNamed('/login');
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 80, vertical: 15),
+                        ),
+                        child: Text(
+                          'Cadastrar',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context, rootNavigator: true).pushNamed('/aluno');
@@ -89,5 +177,6 @@ class PersonalScreen extends StatelessWidget {
           ),
         ),
       ),
-    );  }
+    );
+  }
 }

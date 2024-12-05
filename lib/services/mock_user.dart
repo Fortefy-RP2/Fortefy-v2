@@ -1,12 +1,14 @@
-import '../models/user.dart';
+import '../models/usuario.dart';
 
 class MockUser {
-  User getCurrentUser() {
-    return User(
-      name: 'Joselito da Silva', 
-      birthDate: '21/06/1999', 
+  Usuario getCurrentUser() {
+    return Usuario(
+      nome: 'Joselito',
+      sobrenome: 'da Silva',
+      dataNasc: '21/06/1999',
       email: 'joselits@gmail.com', 
-      password: '123456',
+      senha: '123456',
+      cpf: '06160081632'
     );
   }
 }
