@@ -59,29 +59,4 @@ class DatabaseService {
       await _connection.close();
     }
   }
-
-  Future<Map<String, dynamic>?> login(String email, String senha) async {
-  try {
-    await connect();
-
-    // Consulta no banco de dados para verificar as credenciais
-    final result = await _connection.execute(
-      '''
-      SELECT cpf, nome, data_nasc, email
-      FROM usuario
-      WHERE email = @email AND senha = @senha
-      ''',
-      parameters: {
-        'email': email,
-        'senha': senha, // A senha deve estar criptografada
-      },
-    );
-  } catch (e) {
-    print('Erro ao realizar login: $e');
-    rethrow; // Propaga o erro para que possa ser tratado
-  } finally {
-    await disconnect();
-  }
-}
-
 }

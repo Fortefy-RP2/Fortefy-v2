@@ -48,23 +48,23 @@ class PersonalScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       // Campo CREF
-                      buildTextField('CREF:', controller: crefController),
+                      buildTextField('CREF', crefController),
                       SizedBox(height: 15),
 
                       // Campo Nome Completo
-                      buildTextField('Nome completo:', controller: nomeController),
+                      buildTextField('Nome completo:', nomeController),
                       SizedBox(height: 15),
 
                       // Campo Data de Nascimento
-                      buildTextField('Data de nascimento:', controller: dataNascimentoController),
+                      buildTextField('Data de nascimento:', dataNascimentoController),
                       SizedBox(height: 15),
 
                       // Campo Email
-                      buildTextField('Email:', controller: emailController),
+                      buildTextField('Email:', emailController),
                       SizedBox(height: 15),
 
                       // Campo Senha
-                      buildTextField('Senha:', obscureText: true, controller: senhaController),
+                      buildTextField('Senha:', obscureText: true, senhaController),
                       SizedBox(height: 30),
 
                       // Botão Cadastrar
@@ -85,7 +85,7 @@ class PersonalScreen extends StatelessWidget {
 
                             DateTime? dataNascimento;
                             try {
-                              // Tenta converter a data de nascimento para DateTime
+                              // Tenta converter a data de nascimento para DateTimeconst telaDeBusca ({super.key});
                               dataNascimento = DateTime.parse(dataNascimentoText);
                             } catch (e) {
                               print("Formato de data inválido. Use o formato YYYY-MM-DD.");
@@ -113,6 +113,19 @@ class PersonalScreen extends StatelessWidget {
                         child: Text(
                           'Cadastrar',
                           style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context, rootNavigator: true).pushNamed('/aluno');
+                        },
+                        child: Text(
+                          'Você é aluno? Clique aqui.',
+                          style: TextStyle(
+                            color: Colors.white54,
+                            fontStyle: FontStyle.italic,
+                          ),
                         ),
                       ),
                     ],

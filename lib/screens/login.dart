@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projetos/screens/screens.dart';
 import '../widgets/widgets.dart';
 import '../database/database.dart';
 
@@ -13,39 +14,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-  void onLoginButtonPressed() async {
-  if (loginKey.currentState!.validate()) {
-    final dbService = DatabaseService();
-
-    try {
-      // Obtém os valores dos campos
-      String email = emailController.text.trim();
-      String senha = senhaController.text.trim();
-
-      // Chama a função de login
-      final usuario = await dbService.login(email, senha);
-
-      if (usuario != null) {
-        // Login bem-sucedido
-        print('Bem-vindo, ${usuario['nome']}!');
-        // Redirecionar para outra tela, ex.: página inicial
-        Navigator.pushReplacementNamed(context, '/paginaInicial', arguments: usuario);
-      } else {
-        // Exibe uma mensagem de erro
-        print('Credenciais inválidas.');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Email ou senha incorretos!')),
-        );
-      }
-    } catch (e) {
-      print('Erro ao realizar login: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erro ao tentar logar, tente novamente!')),
-      );
-    }
-  }
-}
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 23, 93, 95),
       body: Padding(
@@ -72,15 +40,15 @@ class LoginScreen extends StatelessWidget {
                   key: loginKey,
                   child: Column(
                     children: [
-                      buildTextField('Email:', controller: emailController),
+                      buildTextField('Email:', emailController),
                       SizedBox(height: 20),
 
-                      buildTextField('Senha:', controller: senhaController),
+                      buildTextField('Senha:', senhaController),
                       SizedBox(height: 20)
                     ],
                   ),
                 ),
-                ElevatedButton(onPressed: onLoginButtonPressed, child: Text('Entrar')),
+                ButtonPadrao(texto: 'Entrar', destino: StartScreen()),
                 SizedBox(height: 70),
                 GestureDetector(
                   onTap: () {

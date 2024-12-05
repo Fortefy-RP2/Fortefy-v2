@@ -9,7 +9,6 @@ class AlunoScreen extends StatefulWidget{
   State<AlunoScreen> createState() => formularioCustomizado();
 }
 
-
 class formularioCustomizado extends State<AlunoScreen>{
   final GlobalKey<FormState> alunoKey = GlobalKey<FormState>();
 
