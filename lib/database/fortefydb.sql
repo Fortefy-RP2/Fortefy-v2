@@ -1,3 +1,19 @@
+-- Crie o banco e conecte nele antes de rodar
+-- a criação de usuário abaixo e permissões abaixo;
+CREATE DATABASE fortefydb;
+
+-- Com o banco criado, rode esse trecho;
+CREATE SCHEMA IF NOT EXISTS fortefyschema;
+
+SET search_path to fortefyschema;
+
+CREATE USER fortefy_app WITH ENCRYPTED PASSWORD 'fortefy_senha';
+GRANT ALL PRIVILEGES ON DATABASE fortefydb to fortefy_app;
+GRANT ALL ON SCHEMA fortefyschema TO fortefy_app;
+
+-- Rode a transação abaixo inteira apenas se o restante tiver funcionado
+BEGIN;
+SET search_path to fortefyschema;
 CREATE TABLE "usuario" (
   "cpf" char(11) PRIMARY KEY,
   "nome" varchar(100),
@@ -24,15 +40,14 @@ CREATE TABLE "programa_treinamento" (
 );
 
 CREATE TABLE "treino" (
-  "id" serial,
+  "id" SERIAL PRIMARY KEY,
   "data_inicio" date,
   "data_fim" date,
   "hora_inicio" time,
   "hora_fim" time,
   "nome_treino" varchar(30),
   "avaliacao_aluno" integer,
-  "avaliacao_ef" integer,
-  PRIMARY KEY ("id", "data_inicio")
+  "avaliacao_ef" integer
 );
 
 CREATE TABLE "exercicio" (
@@ -86,3 +101,5 @@ ALTER TABLE "especializacao_ef" ADD FOREIGN KEY ("id_especialidade") REFERENCES 
 ALTER TABLE "mensagem" ADD FOREIGN KEY ("cpf_remetente") REFERENCES "usuario" ("cpf");
 
 ALTER TABLE "mensagem" ADD FOREIGN KEY ("cpf_destinatario") REFERENCES "usuario" ("cpf");
+
+COMMIT;
