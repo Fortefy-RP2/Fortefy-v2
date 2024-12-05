@@ -6,6 +6,8 @@ import '../services/services.dart';
 import '../utils/utils.dart';
 
 class ConfiguracoesWidget extends StatefulWidget{
+  const ConfiguracoesWidget({super.key});
+
   @override
   _ConfiguracoesScreen createState() => _ConfiguracoesScreen();
 }
@@ -26,7 +28,7 @@ class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
 
   void _togglePasswordVisible() {
     VisibilityUtils.togglePasswordVisibility(
-      isVisible: _isPasswordVisible, 
+      isVisible: _isPasswordVisible,
       onVisibilityChanged: (newVisibility) {
         setState(() {
           _isPasswordVisible = newVisibility;
@@ -141,7 +143,7 @@ class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
                     style: TextStyle(color: Colors.black),
                   ),
                   SizedBox(width: 4),
-                  IconButton( 
+                  IconButton(
                     icon: Icon(
                       _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
                       size: 20,

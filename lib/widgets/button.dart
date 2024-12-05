@@ -4,7 +4,7 @@ class ButtonPadrao extends StatelessWidget {
   final String texto;
   final Widget destino;
 
-  ButtonPadrao({required this.texto, required this.destino});
+  const ButtonPadrao({super.key, required this.texto, required this.destino});
 
   @override
   Widget build(BuildContext context) {

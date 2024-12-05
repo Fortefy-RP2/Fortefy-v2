@@ -5,6 +5,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isPersonal = false;
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 23, 93, 95),
       body: Padding(
@@ -28,6 +29,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ),
+
             SizedBox(height: 50),
 
             // Texto: "Você é..."
@@ -108,3 +110,4 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
