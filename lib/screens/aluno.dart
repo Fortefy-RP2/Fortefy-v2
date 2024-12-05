@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:postgres/postgres.dart';
 import 'package:projetos/database/database.dart';
 
 class AlunoScreen extends StatefulWidget{

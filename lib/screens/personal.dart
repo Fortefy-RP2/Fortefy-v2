@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projetos/database/database.dart';
+import 'package:projetos/screens/screens.dart';
 import '../widgets/widgets.dart';
 
 class PersonalScreen extends StatelessWidget {
@@ -67,54 +67,7 @@ class PersonalScreen extends StatelessWidget {
                       buildTextField('Senha:', obscureText: true, senhaController),
                       SizedBox(height: 30),
 
-                      // Botão Cadastrar
-                      ElevatedButton(
-                        onPressed: () async {
-                          if (personalKey.currentState!.validate()) {
-                            final cref = crefController.text;
-                            final nome = nomeController.text;
-                            final dataNascimentoText = dataNascimentoController.text;
-                            final email = emailController.text;
-                            final senha = senhaController.text;
-
-                            // Validação adicional para evitar valores nulos ou vazios
-                            if (cref.isEmpty || nome.isEmpty || dataNascimentoText.isEmpty || email.isEmpty || senha.isEmpty) {
-                              print("Todos os campos devem ser preenchidos.");
-                              return;
-                            }
-
-                            DateTime? dataNascimento;
-                            try {
-                              // Tenta converter a data de nascimento para DateTimeconst telaDeBusca ({super.key});
-                              dataNascimento = DateTime.parse(dataNascimentoText);
-                            } catch (e) {
-                              print("Formato de data inválido. Use o formato YYYY-MM-DD.");
-                              return;
-                            }
-
-                            final personalData = {
-                              'cref': cref,
-                              'nome': nome,
-                              'data_nascimento': dataNascimento,
-                              'email': email,
-                              'senha': senha
-                            };
-
-                            // Envia os dados para o banco
-                            final dbService = DatabaseService();
-                            
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 80, vertical: 15),
-                        ),
-                        child: Text(
-                          'Cadastrar',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
+                      ButtonPadrao(texto: 'Cadastrar', destino: StartScreen()),
                       SizedBox(height: 15),
                       GestureDetector(
                         onTap: () {

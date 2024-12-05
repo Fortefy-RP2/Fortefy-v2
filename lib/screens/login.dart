@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projetos/screens/screens.dart';
 import '../widgets/widgets.dart';
-import '../database/database.dart';
 
 class LoginScreen extends StatelessWidget {
   final GlobalKey<FormState> loginKey = GlobalKey<FormState>();
