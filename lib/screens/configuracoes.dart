@@ -17,6 +17,10 @@ class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
   File? _profileImage;
   int _selectedIndex = 0;
 
+  final String config = "Configurações";
+  final String home = "Home";
+  final String chat = "Chat";
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;

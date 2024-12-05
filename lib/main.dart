@@ -22,7 +22,7 @@ class FortefyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //initialRoute: '/',
-      home: CadastroScreen(),
+      home: ConfiguracoesWidget(),
       routes: {
         '/home': (context) => HomeScreen(),
         '/aluno': (context) => AlunoScreen(),
@@ -30,7 +30,8 @@ class FortefyApp extends StatelessWidget {
         '/cadastro': (context) => CadastroScreen(),
         '/login' : (context) => LoginScreen(),
         '/configuracoes' : (context) => ConfiguracoesWidget(),
-        '/busca' : (context) => telaDeBusca()
+        '/busca' : (context) => telaDeBusca(),
+        '/start' : (context) => StartScreen()
       },
     );
   }

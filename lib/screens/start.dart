@@ -1,7 +1,22 @@
 import 'package:flutter/material.dart';
+import '../screens/screens.dart';
+import '../utils/utils.dart';
 
-class StartScreen extends StatelessWidget {
-  const StartScreen({super.key});
+class StartScreen extends StatefulWidget{
+  @override
+  _StartScreen createState() => _StartScreen();
+}
+
+class _StartScreen extends State<StartScreen> {
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    navigateToPage(context, index); // Chama a função utilitária de navegação
+  }
+  
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -58,49 +73,29 @@ class StartScreen extends StatelessWidget {
             // Botões na parte inferior
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                // Botão Configurações
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/configuracoes');
-                  },
-                  child: Column(
-                    children: [
-                      Icon(Icons.settings, size: 30),
-                      Text('Configurações'),
-                    ],
-                  ),
-                ),
-
-                // Botão Tela Inicial (atual)
-                ElevatedButton(
-                  onPressed: () {
-                    // Mantenha-se na tela atual ou recarregue o conteúdo
-                  },
-                  child: Column(
-                    children: [
-                      Icon(Icons.home, size: 30),
-                      Text('Início'),
-                    ],
-                  ),
-                ),
-
-                // Botão Chats com Profissionais
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/chats');
-                  },
-                  child: Column(
-                    children: [
-                      Icon(Icons.chat, size: 30),
-                      Text('Chats'),
-                    ],
-                  ),
-                ),
-              ],
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings, color: Colors.white),
+            label: 'Configurações',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.fitness_center, color: Colors.white),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_box, color: Colors.white),
+            label: 'Chat',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.white,
+        backgroundColor: Color.fromARGB(255, 23, 93, 95),
+        onTap: _onItemTapped,
       ),
     );
   }
