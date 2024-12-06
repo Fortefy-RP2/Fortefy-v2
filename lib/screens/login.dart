@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:projetos/screens/start.dart';
 import '../widgets/widgets.dart';
 import 'package:projetos/database/database.dart';
 

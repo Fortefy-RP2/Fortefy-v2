@@ -12,8 +12,8 @@ class DatabaseService {
           host: 'localhost',
           port: 5432,
           database: 'fortefydb',
-          username: 'andre',
-          password: 'andre',
+          username: 'fortefy_app',
+          password: 'fortefy_senha',
         ),
         settings: ConnectionSettings(
             sslMode: SslMode.disable,
@@ -134,5 +134,4 @@ class DatabaseService {
     }
     return true;
   }
-
 }

@@ -5,8 +5,8 @@ import 'package:projetos/utils/utils.dart';
 
 class telaDeBusca extends StatelessWidget {
 
-  final regionController = TextEditingController();
-  final serviceController = TextEditingController();
+  final regionControler = TextEditingController();
+  final serviceControler = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +31,11 @@ class telaDeBusca extends StatelessWidget {
           child: Column(
             children: [
               Text('Selecione a região onde deseja um personal:'),
-              buildTextField('Região: ', regionController),
+              buildTextField('Região: ', regionControler),
               SizedBox(height: 20),
 
               Text('Selecione o destino buscado:'),
-              buildTextField('Tipo de serviço:', serviceController),
+              buildTextField('Tipo de serviço:', serviceControler),
               SizedBox(height: 20),
 
               GenderSelection(),
