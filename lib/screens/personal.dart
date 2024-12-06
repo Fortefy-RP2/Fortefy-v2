@@ -177,4 +177,3 @@ class PersonalScreenState extends State<PersonalScreen> {
   }
 }
   // Função para construir os campos de texto
-  

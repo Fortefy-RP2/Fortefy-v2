@@ -5,6 +5,8 @@ import 'screens/login.dart';
 import 'screens/aluno.dart';
 import 'screens/personal.dart';
 import 'screens/start.dart';
+import 'screens/pagamento.dart';
+import 'screens/pagamento.dart';
 //import 'screens/configuracoes_screen.dart';
 //import 'screens/chats_screen.dart';
 
@@ -35,6 +37,7 @@ class FortefyApp extends StatelessWidget {
         '/cadastro': (context) => CadastroScreen(),
         '/login': (context) => LoginScreen(),
         '/configuracoes': (context) => ConfiguracoesWidget(),
+        '/pagamento': (context) => PagamentoScreen(),
       },
     );
   }
