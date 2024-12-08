@@ -1,12 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:projetos/screens/start.dart';
 import '../widgets/widgets.dart';
+import 'package:projetos/database/database.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => LoginScreenState();
+}
+
+class LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> loginKey = GlobalKey<FormState>();
 
   final String login = 'Entrar';
-  LoginScreen({super.key});
+  final emailController = TextEditingController();
+  final senhaController = TextEditingController();
+
+  @override
+  void dispose(){
+    emailController.dispose();
+    senhaController.dispose();
+    super.dispose();
+  }
+
+  Future<bool> _submitLogin() async{
+    print('Botão apertado:');
+
+    final userData = {
+      'email': emailController.text,
+      'senha': senhaController.text,
+    };
+
+    print('Estrutura montada, vai tentar logar com os dados $userData');
+    final DatabaseService dbservico =  await DatabaseService();
+    try{
+      await dbservico.conectar();
+      if(!await DatabaseService().login(userData)){
+        return false;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Login realizado com sucesso!')),
+      );
+
+    }catch(e){
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao logar: $e')),
+      );
+      return false;
+    }finally{
+      await dbservico.desconectar();
+    }
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +81,33 @@ class LoginScreen extends StatelessWidget {
                   key: loginKey,
                   child: Column(
                     children: [
-                      buildTextField('Email:'),
+                      buildTextField('Email:', emailController),
                       SizedBox(height: 20),
 
-                      buildTextField('Senha:'),
+                      buildTextField('Senha:', senhaController, obscureText: true),
                       SizedBox(height: 20)
                     ],
                   ),
                 ),
-                ButtonPadrao(texto: login, destino: StartWidget()),
+                ElevatedButton(
+                  onPressed: () async {
+                    if (loginKey.currentState!.validate()) {
+                      if(await _submitLogin()){
+                        Navigator.of(context, rootNavigator: true).pushNamed('/start');
+                      }
+                    }
+                  },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: BorderSide(color: Colors.blueAccent, width: 2)
+                      ),
+                    ),
+                    child: Text(login)
+                ),
                 SizedBox(height: 70),
                 GestureDetector(
                   onTap: () {

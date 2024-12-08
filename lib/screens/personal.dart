@@ -1,12 +1,82 @@
 import 'package:flutter/material.dart';
+import 'package:projetos/screens/screens.dart';
 import '../widgets/widgets.dart';
+import '../widgets/textField.dart';
+import 'package:projetos/database/database.dart';
+import '../models/usuario.dart';
 
-class PersonalScreen extends StatelessWidget {
-  final GlobalKey<FormState> personalKey = GlobalKey<FormState>();
-
-  PersonalScreen({super.key});
+class PersonalScreen extends StatefulWidget {
+  const PersonalScreen({super.key});
 
   @override
+  State<PersonalScreen> createState() => PersonalScreenState();
+}
+
+class PersonalScreenState extends State<PersonalScreen> {
+  final GlobalKey<FormState> personalKey = GlobalKey<FormState>();
+
+  final crefController = TextEditingController();
+  final cpfController = TextEditingController();
+  final nomeController = TextEditingController();
+  final sobrenomeController = TextEditingController();
+  final nascimentoController = TextEditingController();
+  final emailController = TextEditingController();
+  final senhaController = TextEditingController();
+  final confirmaSenhaController = TextEditingController();
+
+  @override
+  void dispose(){
+    cpfController.dispose();
+    nomeController.dispose();
+    sobrenomeController.dispose();
+    nascimentoController.dispose();
+    emailController.dispose();
+    senhaController.dispose();
+    confirmaSenhaController.dispose();
+    crefController.dispose();
+    super.dispose();
+  }
+
+  Future<bool> _submitForm() async{
+    print('Botão apertado:');
+
+    if(senhaController.text != confirmaSenhaController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('As senhas devem ser iguais')),
+      );
+      return false;
+    }
+
+    final personalData  = Usuario(
+        nome: nomeController.text,
+        sobrenome: sobrenomeController.text,
+        dataNasc: nascimentoController.text,
+        email: emailController.text,
+        senha: senhaController.text,
+        cpf: cpfController.text,
+        cref: crefController.text,
+    );
+
+    print('Estrutura montada, vai tentar inserir $personalData');
+    try{
+
+      if(!await DatabaseService().formularioCadastro(personalData)){
+        return false;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Cadastro realizado com sucesso')),
+      );
+
+    }catch(e){
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao cadastrar: $e')),
+      );
+      return false;
+    }
+    return true;
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 23, 93, 95),
@@ -41,34 +111,40 @@ class PersonalScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       // Campo Nome Completo
-                      buildTextField('Nome completo:'),
+                      buildTextField('Nome:', nomeController),
+                      SizedBox(height: 15),
+
+                      buildTextField('Sobrenome:', sobrenomeController),
+                      SizedBox(height: 15),
+
+                      buildTextField('CPF:', cpfController),
                       SizedBox(height: 15),
 
                       // Campo Data de Nascimento
-                      buildTextField('Data de nascimento:'),
+                      buildTextField('Data de nascimento:', nascimentoController),
                       SizedBox(height: 15),
 
                       // Campo Email
-                      buildTextField('Email:'),
+                      buildTextField('Email:', emailController),
                       SizedBox(height: 15),
 
                       // Campo Senha
-                      buildTextField('Senha:', obscureText: true),
+                      buildTextField('Senha:', senhaController, obscureText: true),
                       SizedBox(height: 15),
 
                       // Campo Repetir Senha
-                      buildTextField('Repita sua senha:', obscureText: true),
+                      buildTextField('Repita sua senha:', confirmaSenhaController, obscureText: true),
                       SizedBox(height: 15),
 
                       // Campo CREF
-                      buildTextField('CREF:'),
+                      buildTextField('CREF:', crefController),
                       SizedBox(height: 30),
 
                       // Botão Cadastrar
                       ElevatedButton(
-                        onPressed: () {
-                          if (personalKey.currentState!.validate()) {
-                            // Processar cadastro
+                        onPressed:  () async {
+                          if(await _submitForm()){
+                            Navigator.of(context, rootNavigator: true).pushNamed('/login');
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -79,6 +155,18 @@ class PersonalScreen extends StatelessWidget {
                         child: Text(
                           'Cadastrar',
                           style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context, rootNavigator: true).pushNamed('/aluno');
+                        },
+                        child: Text(
+                          'Você é aluno? Clique aqui.',
+                          style: TextStyle(
+                            color: Colors.white54,
+                            fontStyle: FontStyle.italic,
+                          ),
                         ),
                       ),
                     ],
@@ -92,5 +180,3 @@ class PersonalScreen extends StatelessWidget {
     );
   }
 }
-  // Função para construir os campos de texto
-  

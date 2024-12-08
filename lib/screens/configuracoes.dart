@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 //import '../widgets/widgets.dart';
-import '../models/user.dart';
+import '../models/usuario.dart';
 import '../services/services.dart';
 import '../utils/utils.dart';
 
@@ -12,10 +12,14 @@ class ConfiguracoesWidget extends StatefulWidget{
 
 class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
 
-  final User user = MockUser().getCurrentUser();
+  final Usuario user = MockUser().getCurrentUser();
   bool _isPasswordVisible = false;
   File? _profileImage;
   int _selectedIndex = 0;
+
+  final String config = "Configurações";
+  final String home = "Home";
+  final String chat = "Chat";
 
   void _onItemTapped(int index) {
     setState(() {
@@ -91,7 +95,7 @@ class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
                       text: 'Nome: ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    TextSpan(text: user.name),
+                    TextSpan(text: user.nome),
                   ],
                 ),
                 style: TextStyle(color: Colors.black),
@@ -104,7 +108,7 @@ class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
                       text: 'Data de Nascimento: ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    TextSpan(text: user.birthDate),
+                    TextSpan(text: user.dataNasc),
                   ],
                 ),
                 style: TextStyle(color: Colors.black),
@@ -134,7 +138,7 @@ class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         TextSpan(
-                          text: _isPasswordVisible ? user.password : '********',
+                          text: _isPasswordVisible ? user.senha : '********',
                         ),
                       ],
                     ),

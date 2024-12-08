@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projetos/widgets/busca.dart';
+import 'package:projetos/widgets/widgets.dart';
 //import 'screens/chats_screen.dart';
 import './screens/screens.dart';
 
@@ -22,16 +23,17 @@ class FortefyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //initialRoute: '/',
-      home: AlunoScreen(),
+      home: resultSearch(),
       routes: {
-        '/start': (context) => StartWidget(),
+        '/home': (context) => HomeScreen(),
         '/aluno': (context) => AlunoScreen(),
         '/personal': (context) => PersonalScreen(),
         '/cadastro': (context) => CadastroScreen(),
         '/login' : (context) => LoginScreen(),
-        '/chat' : (context) => ChatWidget(),
         '/configuracoes' : (context) => ConfiguracoesWidget(),
-        '/busca' : (context) => telaDeBusca()
+        '/chat' : (context) => ChatWidget(),
+        '/busca' : (context) => telaDeBusca(),
+        '/start' : (context) => StartScreen()
       },
     );
   }

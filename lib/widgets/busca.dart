@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:projetos/widgets/textField.dart';
+import 'package:projetos/screens/login.dart';
+import 'package:projetos/widgets/widgets.dart';
+import 'package:projetos/utils/utils.dart';
 
 class telaDeBusca extends StatelessWidget {
-  const telaDeBusca ({super.key});
+
+  final regionControler = TextEditingController();
+  final serviceControler = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +31,17 @@ class telaDeBusca extends StatelessWidget {
           child: Column(
             children: [
               Text('Selecione a região onde deseja um personal:'),
-              buildTextField('Região: '),
+              buildTextField('Região: ', regionControler),
               SizedBox(height: 20),
 
               Text('Selecione o destino buscado:'),
-              buildTextField('Tipo de serviço:'),
-              SizedBox(height: 20)
+              buildTextField('Tipo de serviço:', serviceControler),
+              SizedBox(height: 20),
+
+              GenderSelection(),
+              PriceSlider(),
+
+              ButtonPadrao(texto: 'Buscar', destino: LoginScreen())
             ],
           ),
         ),

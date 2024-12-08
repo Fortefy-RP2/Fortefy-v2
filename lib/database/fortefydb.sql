@@ -10,6 +10,7 @@ SET search_path to fortefyschema;
 CREATE USER fortefy_app WITH ENCRYPTED PASSWORD 'fortefy_senha';
 GRANT ALL PRIVILEGES ON DATABASE fortefydb to fortefy_app;
 GRANT ALL ON SCHEMA fortefyschema TO fortefy_app;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA fortefyschema TO fortefy_app;
 
 -- Rode a transação abaixo inteira apenas se o restante tiver funcionado
 BEGIN;

@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import '../utils/utils.dart';
-//import '../widgets/widgets.dart';
-//import 'dart:io';
-//import '../services/services.dart';
+import '../widgets/widgets.dart';
 
-class StartWidget extends StatefulWidget{
+
+class StartScreen extends StatefulWidget{
   @override
   _StartScreen createState() => _StartScreen();
 }
 
-class _StartScreen extends State<StartWidget> {
-
-  int _selectedIndex = 1;
+class _StartScreen extends State<StartScreen> {
 
   void _onItemTapped(int index) {
     setState(() {
@@ -19,6 +16,8 @@ class _StartScreen extends State<StartWidget> {
     });
     navigateToPage(context, index); // Chama a função utilitária de navegação
   }
+  
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +30,15 @@ class _StartScreen extends State<StartWidget> {
           children: [
             // Campo de busca
             TextField(
+              readOnly: true,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => telaDeBusca()
+                  ) 
+                );
+              },
               decoration: InputDecoration(
                 hintText: 'Digite o serviço desejado...',
                 hintStyle: TextStyle(color: Colors.white),
@@ -71,6 +79,11 @@ class _StartScreen extends State<StartWidget> {
 
             // Espaço entre os itens e os botões
             SizedBox(height: 20),
+
+            // Botões na parte inferior
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            ),
           ],
         ),
       ),
@@ -92,7 +105,7 @@ class _StartScreen extends State<StartWidget> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.white,
         backgroundColor: Color.fromARGB(255, 23, 93, 95),
-        onTap: _onItemTapped, // Usa a função de navegação utilitária
+        onTap: _onItemTapped,
       ),
     );
   }
