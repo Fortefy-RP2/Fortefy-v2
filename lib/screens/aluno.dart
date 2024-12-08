@@ -1,9 +1,74 @@
 import 'package:flutter/material.dart';
+import 'package:projetos/main.dart';
+import 'package:postgres/postgres.dart';
+import 'package:projetos/database/database.dart';
 
-class AlunoScreen extends StatelessWidget {
+
+class AlunoScreen extends StatefulWidget{
+  const AlunoScreen({super.key});
+
+  @override
+  State<AlunoScreen> createState() => formularioCustomizado();
+}
+
+
+class formularioCustomizado extends State<AlunoScreen>{
   final GlobalKey<FormState> alunoKey = GlobalKey<FormState>();
 
-  AlunoScreen({super.key});
+  final cpfController = TextEditingController();
+  final nomeController = TextEditingController();
+  final sobrenomeController = TextEditingController();
+  final nascimentoController = TextEditingController();
+  final emailController = TextEditingController();
+  final senhaController = TextEditingController();
+  final confirmaSenhaController = TextEditingController();
+
+  @override
+  void dispose(){
+    cpfController.dispose();
+    nomeController.dispose();
+    sobrenomeController.dispose();
+    nascimentoController.dispose();
+    emailController.dispose();
+    senhaController.dispose();
+    confirmaSenhaController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submitForm() async{
+    print('Botão apertado:');
+
+    if(senhaController.text != confirmaSenhaController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('As senhas devem ser iguais')),
+      );
+      return;
+    }
+
+      final userData = {
+        'nome': nomeController.text,
+        'sobrenome': sobrenomeController.text,
+        'data_nasc': nascimentoController.text,
+        'email': emailController.text,
+        'senha': senhaController.text,
+        'cpf': cpfController.text,
+      };
+    print('Estrutura montada, vai tentar inserir $userData');
+    final DatabaseService dbservico =  await DatabaseService();
+      try{
+        await dbservico.connect();
+        await DatabaseService().insertAluno(userData);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Cadastro realizado com sucesso')),
+        );
+      }catch(e){
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erro ao cadastrar: $e')),
+        );
+      }finally{
+        await dbservico.disconnect();
+      }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,37 +105,40 @@ class AlunoScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       // Campo Nome Completo
-                      _buildTextField('Nome completo:'),
+                      _buildTextField('Nome:', nomeController),
+                      SizedBox(height: 15),
+
+                      _buildTextField('Sobrenome:', sobrenomeController),
+                      SizedBox(height: 15),
+
+                      _buildTextField('CPF:', cpfController),
                       SizedBox(height: 15),
 
                       // Campo Data de Nascimento
-                      _buildTextField('Data de nascimento:'),
+                      _buildTextField('Data de nascimento:', nascimentoController),
                       SizedBox(height: 15),
 
                       // Campo Email
-                      _buildTextField('Email:'),
+                      _buildTextField('Email:', emailController),
                       SizedBox(height: 15),
 
                       // Campo Senha
-                      _buildTextField('Senha:', obscureText: true),
+                      _buildTextField('Senha:', senhaController, obscureText: true),
                       SizedBox(height: 15),
 
                       // Campo Repetir Senha
-                      _buildTextField('Repita sua senha:', obscureText: true),
+                      _buildTextField('Repita sua senha:', confirmaSenhaController, obscureText: true),
                       SizedBox(height: 30),
 
                       // Botão Cadastrar
                       ElevatedButton(
-                        onPressed: () {
-                          // Ação ao clicar no botão Cadastrar
-                          if (alunoKey.currentState!.validate()) {
-                            // Processar cadastro
-                          }
-                        },
+                        onPressed: _submitForm,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue, // Cor do botão
+                          backgroundColor: Colors.blue,
                           padding: EdgeInsets.symmetric(
-                              horizontal: 80, vertical: 15),
+                            horizontal: 80,
+                            vertical: 15,
+                          ),
                         ),
                         child: Text(
                           'Cadastrar',
@@ -83,7 +151,7 @@ class AlunoScreen extends StatelessWidget {
                       // Link para cadastro de personal
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, '/personal');
+                          Navigator.of(context, rootNavigator: true).pushNamed('/personal');
                         },
                         child: Text(
                           'Você é personal? Clique aqui.',
@@ -105,8 +173,9 @@ class AlunoScreen extends StatelessWidget {
   }
 
   // Função para construir os campos de texto
-  Widget _buildTextField(String labelText, {bool obscureText = false}) {
+  Widget _buildTextField(String labelText, TextEditingController controller, {bool obscureText = false} ) {
     return TextFormField(
+    controller: controller,
       obscureText: obscureText,
       decoration: InputDecoration(
         labelText: labelText,

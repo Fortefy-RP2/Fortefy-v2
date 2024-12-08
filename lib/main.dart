@@ -22,7 +22,7 @@ class FortefyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //initialRoute: '/',
-      home: telaDeBusca(),
+      home: AlunoScreen(),
       routes: {
         '/start': (context) => StartWidget(),
         '/aluno': (context) => AlunoScreen(),
