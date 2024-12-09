@@ -9,6 +9,20 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mime/mime.dart';
+import 'package:projetos/database/database.dart';
+import 'package:projetos/models/usuario.dart';
+
+class ChatArguments {
+  Usuario usuario;
+  String cpfInterlocutor;
+  String nomeInterlocutor;
+
+  ChatArguments({
+    required this.usuario,
+    required this.cpfInterlocutor,
+    required this.nomeInterlocutor
+  });
+}
 
 class ChatApp extends StatelessWidget {
   const ChatApp({super.key});
@@ -30,21 +44,22 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  late Usuario usuario;
+  late String cpfInterlocutor;
   List<types.Message> _messages = [];
-
   int _incrementalId = 1;
 
-  final _user = const types.User(
-    id: '82091008-a484-4a89-ae75-a22bf8d6f3ac',
-  );
+  types.User _user = types.User(id: '');
 
   @override
   void initState() {
     super.initState();
-    _loadMessages();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _loadMessages());
   }
 
   void _addMessage(types.Message message) {
+    print(message.createdAt.toString());
     setState(() {
       _messages.insert(0, message);
     });
@@ -121,27 +136,42 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void _loadMessages() async {
-    final response = await rootBundle.loadString('assets/messages.json');
-    final messages = (jsonDecode(response) as List)
-        .map((e) => types.Message.fromJson(e as Map<String, dynamic>))
-        .toList();
+    _user = types.User(id: usuario.cpf);
 
+    final messages = await DatabaseService().getMessagesFromChat(usuario?.cpf, cpfInterlocutor);
     setState(() {
       _messages = messages;
     });
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Chat(
-          messages: _messages,
-          onAttachmentPressed: _handleAttachmentPressed,
-          onMessageTap: _handleMessageTap,
-          onPreviewDataFetched: _handlePreviewDataFetched,
-          onSendPressed: _handleSendPressed,
-          showUserAvatars: true,
-          showUserNames: true,
-          user: _user,
+  Widget build(BuildContext context) {
+    ChatArguments chatArguments = ModalRoute.of(context)?.settings.arguments as ChatArguments;
+    usuario = chatArguments.usuario;
+    cpfInterlocutor = chatArguments.cpfInterlocutor;
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 23, 93, 95),
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
         ),
-      );
+      ),
+      body: Chat(
+        messages: _messages,
+        onAttachmentPressed: _handleAttachmentPressed,
+        onMessageTap: _handleMessageTap,
+        onPreviewDataFetched: _handlePreviewDataFetched,
+        onSendPressed: _handleSendPressed,
+        showUserAvatars: true,
+        showUserNames: true,
+        user: _user,
+        theme: DefaultChatTheme(
+          backgroundColor: Color.fromARGB(255, 23, 93, 95),
+          primaryColor: Color.fromRGBO(29, 28, 33, 1),
+        ),
+      ),
+    );
+  }
 }

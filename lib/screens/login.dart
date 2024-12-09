@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/widgets.dart';
 import 'package:projetos/database/database.dart';
+import 'package:projetos/models/usuario.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -23,8 +24,10 @@ class LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  Future<bool> _submitLogin() async{
+  Future<Usuario?> _submitLogin() async{
     print('Botão apertado:');
+
+    Usuario? usuario;
 
     final userData = {
       'email': emailController.text,
@@ -35,8 +38,9 @@ class LoginScreenState extends State<LoginScreen> {
     final DatabaseService dbservico =  await DatabaseService();
     try{
       await dbservico.conectar();
-      if(!await DatabaseService().login(userData)){
-        return false;
+      usuario = await DatabaseService().login(userData);
+      if(usuario == null){
+        return null;
       }
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Login realizado com sucesso!')),
@@ -46,11 +50,11 @@ class LoginScreenState extends State<LoginScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Erro ao logar: $e')),
       );
-      return false;
+      return null;
     }finally{
       await dbservico.desconectar();
     }
-    return true;
+    return usuario;
   }
 
   @override
@@ -92,8 +96,9 @@ class LoginScreenState extends State<LoginScreen> {
                 ElevatedButton(
                   onPressed: () async {
                     if (loginKey.currentState!.validate()) {
-                      if(await _submitLogin()){
-                        Navigator.of(context, rootNavigator: true).pushNamed('/start');
+                      Usuario? usuario = await _submitLogin();
+                      if(usuario != null){
+                        Navigator.of(context, rootNavigator: true).pushNamed('/start', arguments: usuario);
                       }
                     }
                   },

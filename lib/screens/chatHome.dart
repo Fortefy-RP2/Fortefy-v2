@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:projetos/database/database.dart';
 import '../services/services.dart';
 import '../utils/utils.dart';
+import 'package:projetos/models/usuario.dart';
 
 import 'package:projetos/screens/chat.dart';
 
@@ -12,21 +14,47 @@ class ChatWidget extends StatefulWidget{
 
 class _ChatHomeScreen extends State<ChatWidget> {
   
+  late Usuario usuario;
+  Map<String, String> interlocutores = {};
   int _selectedIndex = 2;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _loadInterlocutores());
+  }
+
+  void _loadInterlocutores() async {
+    final interlocutores = await DatabaseService().getInterlocutores(usuario.cpf);
+    setState(() {
+      this.interlocutores = interlocutores;
+    });
+  }
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-    navigateToPage(context, index); // Chama a função utilitária de navegação
+    navigateToPage(context, index, usuario); // Chama a função utilitária de navegação
   }
 
   void _onChatTapped(int index) {
-    Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context) => ChatPage()));
+    Navigator.of(context).pushReplacement(new MaterialPageRoute(
+      settings: RouteSettings(
+        arguments: ChatArguments (
+          usuario: this.usuario,
+          cpfInterlocutor: interlocutores.keys.elementAt(index),
+          nomeInterlocutor: interlocutores.values.elementAt(index)
+        )
+      ),
+      builder: (BuildContext context) => ChatPage()
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
+    usuario = ModalRoute.of(context)?.settings.arguments as Usuario;
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 23, 93, 95),
       body: Padding(
@@ -44,33 +72,30 @@ class _ChatHomeScreen extends State<ChatWidget> {
             ),
             SizedBox(height: 20),
             
-            // Campo de busca
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Pesquise conversa...',
-                hintStyle: TextStyle(color: Colors.white),
-                labelStyle: TextStyle(color: Colors.white),
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-            ),
-            SizedBox(height: 10),
+            // // Campo de busca
+            // TextField(
+            //   decoration: InputDecoration(
+            //     hintText: 'Pesquise conversa...',
+            //     hintStyle: TextStyle(color: Colors.white),
+            //     labelStyle: TextStyle(color: Colors.white),
+            //     prefixIcon: Icon(Icons.search),
+            //     border: OutlineInputBorder(
+            //       borderRadius: BorderRadius.circular(30),
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(height: 10),
 
             // Display de treinos (Simulação de uma lista de treinos)
             Expanded(
               child: ListView.builder(
-                itemCount: 5, // Número de treinos cadastrados (pode ser variável)
+                itemCount: interlocutores.length, // Número de treinos cadastrados (pode ser variável)
                 itemBuilder: (context, index) {
                   return Card(
                     child: ListTile(
-                      title: Text('Pessoa ${index + 1}'),
-                      subtitle: Text('Ultima mensagem ${index + 1}'),
+                      title: Text(interlocutores.values.elementAt(index)),
                       trailing: Icon(Icons.chat_bubble),
-                      onTap: () {
-                        Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context) => ChatPage()));
-                      },
+                      onTap: () {_onChatTapped(index);},
                     ),
                   );
                 },

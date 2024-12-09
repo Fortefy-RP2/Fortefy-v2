@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../utils/utils.dart';
 import '../widgets/widgets.dart';
-
+import 'package:projetos/models/usuario.dart';
 
 class StartScreen extends StatefulWidget{
   @override
@@ -9,18 +9,20 @@ class StartScreen extends StatefulWidget{
 }
 
 class _StartScreen extends State<StartScreen> {
+  late Usuario usuario;
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-    navigateToPage(context, index); // Chama a função utilitária de navegação
+    navigateToPage(context, index, usuario); // Chama a função utilitária de navegação
   }
   
   int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    usuario = ModalRoute.of(context)?.settings.arguments as Usuario;
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 23, 93, 95),
       body: Padding(

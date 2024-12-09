@@ -12,7 +12,7 @@ class ConfiguracoesWidget extends StatefulWidget{
 
 class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
 
-  final Usuario user = MockUser().getCurrentUser();
+  late Usuario usuario;
   bool _isPasswordVisible = false;
   File? _profileImage;
   int _selectedIndex = 0;
@@ -25,7 +25,7 @@ class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
     setState(() {
       _selectedIndex = index;
     });
-    navigateToPage(context, index); // Chama a função utilitária de navegação
+    navigateToPage(context, index, usuario); // Chama a função utilitária de navegação
   }
 
   void _togglePasswordVisible() {
@@ -50,6 +50,7 @@ class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
 
   @override
   Widget build(BuildContext context) {
+    usuario = ModalRoute.of(context)?.settings.arguments as Usuario;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -95,7 +96,7 @@ class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
                       text: 'Nome: ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    TextSpan(text: user.nome),
+                    TextSpan(text: usuario.nome),
                   ],
                 ),
                 style: TextStyle(color: Colors.black),
@@ -108,7 +109,7 @@ class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
                       text: 'Data de Nascimento: ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    TextSpan(text: user.dataNasc),
+                    TextSpan(text: usuario.dataNasc),
                   ],
                 ),
                 style: TextStyle(color: Colors.black),
@@ -121,7 +122,7 @@ class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
                       text: 'E-mail: ',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    TextSpan(text: user.email),
+                    TextSpan(text: usuario.email),
                   ],
                 ),
                 style: TextStyle(color: Colors.black),
@@ -138,7 +139,7 @@ class _ConfiguracoesScreen extends State<ConfiguracoesWidget> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         TextSpan(
-                          text: _isPasswordVisible ? user.senha : '********',
+                          text: _isPasswordVisible ? usuario.senha : '********',
                         ),
                       ],
                     ),

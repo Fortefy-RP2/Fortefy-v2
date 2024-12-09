@@ -1,5 +1,6 @@
 import 'package:postgres/postgres.dart';
-import '../models/usuario.dart';
+import 'package:projetos/models/usuario.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as chatTypes;
 
 class DatabaseService {
   late Connection _connection;
@@ -80,10 +81,11 @@ class DatabaseService {
     return true;
   }
 
-  Future<bool> login(Map<String, String> userData) async{
+  Future<Usuario?> login(Map<String, String> userData) async{
+    Usuario usuario;
     try{
       if (userData['email'] == null || userData['senha'] == null) {
-        return false;
+        return null;
       }
 
       await conectar();
@@ -99,16 +101,28 @@ class DatabaseService {
       );
 
       if(result.isEmpty){
-          return false;
+        return null;
       }
+
+      Map rowMap = result.first.toColumnMap();
+      DateTime data = rowMap['data_nasc'] as DateTime;
+      String dataStr = '${data.day}/${data.month}/${data.year}';
+      usuario = Usuario(
+        cpf: rowMap['cpf'],
+        nome: rowMap['nome'],
+        sobrenome: rowMap['sobrenome'],
+        dataNasc: dataStr,
+        email: rowMap['email'],
+        senha: rowMap['senha']
+      );
 
     }catch(e){
       print('Erro ao logar usuario: $e');
-      return false;
+      return null;
     }finally{
       await _connection.close();
     }
-    return true;
+    return usuario;
   }
 
   Future<bool> insertPersonal(Usuario personalData) async{
@@ -133,5 +147,90 @@ class DatabaseService {
       await _connection.close();
     }
     return true;
+  }
+
+  Future<List<chatTypes.Message>> getMessagesFromChat(String? cpfUsuario, String? cpfInterlocutor) async {
+    List<chatTypes.Message> messages = <chatTypes.Message>[];
+    
+    try {
+      if (cpfUsuario == null || cpfInterlocutor == null) {
+        return messages;
+      }
+
+      await conectar();
+
+      var query = await _connection.execute(
+        Sql.named(
+          'select * from fortefyschema."mensagem" where '
+          '(cpf_remetente = @usuario and cpf_destinatario = @interlocutor) or '
+          '(cpf_remetente = @interlocutor and cpf_destinatario = @usuario) '
+          'order by data desc;'
+        ),
+        parameters: {
+          'usuario': cpfUsuario,
+          'interlocutor': cpfInterlocutor,
+        },
+      );
+
+      for (ResultRow row in query) {
+        Map rowMap = row.toColumnMap();
+        DateTime dataDaMensagem = rowMap['data'];
+        print(rowMap['data']);
+
+        chatTypes.Message message = chatTypes.TextMessage(
+          id: rowMap['id'].toString(),
+          author: chatTypes.User(
+            id: rowMap['cpf_remetente']
+          ),
+          text: rowMap['texto_mensagem'],
+          createdAt: dataDaMensagem.millisecondsSinceEpoch + 3 * (Duration.millisecondsPerHour),          
+        );
+
+        messages.add(message);
+      }
+
+    } catch(e) {
+      print('Erro ao buscar mensagens: $e');
+    } finally {
+      await _connection.close();
+    }
+
+    return messages;
+  }
+
+  Future<Map<String, String>> getInterlocutores(String? cpfUsuario) async {
+    Map<String, String> interlocutores = {};
+    
+    try {
+      if (cpfUsuario == null) {
+        return interlocutores;
+      }
+
+      await conectar();
+
+      var query = await _connection.execute(
+        Sql.named(
+          'select cpf, nome, sobrenome from fortefyschema."usuario" where cpf in ( '
+	        'select cpf_remetente from fortefyschema."mensagem" where cpf_destinatario = @usuario '
+	        'UNION '
+	        'select cpf_destinatario from fortefyschema."mensagem" where cpf_remetente = @usuario);'
+        ),
+        parameters: {
+          'usuario': cpfUsuario,
+        },
+      );
+
+      for (ResultRow row in query) {
+        Map rowMap = row.toColumnMap();
+        interlocutores[rowMap['cpf']] = '${rowMap['nome']} ${rowMap['sobrenome']}';
+      }
+
+    } catch(e) {
+      print('Erro ao buscar mensagens: $e');
+    } finally {
+      await _connection.close();
+    }
+
+    return interlocutores;
   }
 }

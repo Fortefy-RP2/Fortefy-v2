@@ -76,8 +76,7 @@ CREATE TABLE "especializacao_ef" (
 
 CREATE TABLE "mensagem" (
   "id" serial PRIMARY KEY,
-  "data" date,
-  "hora" time,
+  "data" timestamp,
   "texto_mensagem" varchar(255),
   "cpf_remetente" varchar(11),
   "cpf_destinatario" varchar(11)

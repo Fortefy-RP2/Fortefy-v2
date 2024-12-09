@@ -29,6 +29,8 @@ INSERT INTO "programa_treinamento" ("cpf_aluno", "cpf_ef", "id_treino", "comenta
 VALUES
 ('06160081632', '73070164609', 1, 'Meu dia favorito!', 'Aluna tem dificuldade nesse');
 
+INSERT INTO "mensagem" ("id", "data", "texto_mensagem", "cpf_remetente", "cpf_destinatario")
+VALUES (1, now(), 'heeyaaaaaaaaaaaaaa', '73070164609', '12345678910');
 
 SELECT *
 FROM fortefyschema.educador_fisico;
