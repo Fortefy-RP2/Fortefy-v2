@@ -23,7 +23,7 @@ class FortefyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //initialRoute: '/',
-      home: resultSearch(),
+      home: ConfirmarAgendamento(),
       routes: {
         '/home': (context) => HomeScreen(),
         '/aluno': (context) => AlunoScreen(),
