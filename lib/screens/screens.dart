@@ -5,4 +5,5 @@ export 'configuracoes.dart';
 export 'home.dart';
 export 'login.dart';
 export 'start.dart';
+export 'pagamento.dart';
 export 'chatHome.dart';
