@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:projetos/screens/personal.dart';
+import 'package:projetos/screens/screens.dart';
+import 'package:projetos/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -61,13 +64,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 10),
-                      Text(
-                        'Aluno',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 18,
-                        ),
-                      ),
+                      ButtonPadrao(texto: 'Aluno', destino: AlunoScreen())
                     ],
                   ),
                 ),
@@ -90,13 +87,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 10),
-                      Text(
-                        'Personal',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 18,
-                        ),
-                      ),
+                      ButtonPadrao(texto: 'Personal', destino: PersonalScreen())
                     ],
                   ),
                 ),

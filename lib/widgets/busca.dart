@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projetos/screens/login.dart';
+import 'package:projetos/screens/resultadoBusca.dart';
+import '../screens/screens.dart';
 import 'package:projetos/widgets/widgets.dart';
 import 'package:projetos/utils/utils.dart';
 
@@ -23,6 +24,7 @@ class telaDeBusca extends StatelessWidget {
       body: Center(
         child: Container(
           width: MediaQuery.of(context).size.width * 0.9,
+          height: MediaQuery.of(context).size.height * 0.65,
           padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Colors.grey[300],
@@ -30,18 +32,19 @@ class telaDeBusca extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Text('Selecione a região onde deseja um personal:'),
+              Text('Região onde deseja um personal:'),
               buildTextField('Região: ', regionControler),
               SizedBox(height: 20),
 
-              Text('Selecione o destino buscado:'),
+              Text('Serviço buscado:'),
               buildTextField('Tipo de serviço:', serviceControler),
               SizedBox(height: 20),
 
               GenderSelection(),
               PriceSlider(),
+              SizedBox(height: 15),
 
-              ButtonPadrao(texto: 'Buscar', destino: LoginScreen())
+              ButtonPadrao(texto: 'Buscar', destino: Resultadobusca())
             ],
           ),
         ),

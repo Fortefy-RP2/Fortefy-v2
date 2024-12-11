@@ -35,9 +35,9 @@ class ConfirmarAgendamento extends StatelessWidget {
               ),
               SizedBox(height: 10),
 
-              PersonalCardGenerico(nome: 'Seu personal', 
-                          especialidade: 'Especialidade, especifica.', 
-                          cidade: 'XX, Cidade do Personal', 
+              PersonalCardGenerico(nome: 'Renato Cariani', 
+                          especialidade: 'Musculação, emagrecimento.', 
+                          cidade: 'SP, São Caetano do Sul', 
                           avaliacao: 5.0, 
                           numeroAvaliacoes: 456, 
                           preco: 1500.00, 
@@ -54,9 +54,9 @@ class ConfirmarAgendamento extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 10),
-              _buildInfoRow("Data........................", "10/10/2024", context),
-              _buildInfoRow("Qtd de horas................", "X horas", context),
-              _buildInfoRow("Subtotal..........................................", "R\$x.xxx,00", null),
+              _buildInfoRow("Data........................", "12/12/2024", context),
+              _buildInfoRow("Qtd de horas................", "2 horas", context),
+              _buildInfoRow("Subtotal..........................................", "R\$1.000,00", null),
               SizedBox(height: 20),
 
               // Informações de Pagamento
@@ -69,7 +69,7 @@ class ConfirmarAgendamento extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 10),
-              _buildInfoRow("Total", "R\$x.xxx,00", null),
+              _buildInfoRow("Total", "R\$1.000,00", null),
               SizedBox(height: 10),
               Center(
                 child: ElevatedButton(
