@@ -35,12 +35,13 @@ class ConfirmarAgendamento extends StatelessWidget {
               ),
               SizedBox(height: 10),
 
-              PersonalCardGenerico(nome: 'Renato Cariani', 
-                          especialidade: 'Musculação, emagrecimento.', 
-                          cidade: 'SP, São Caetano do Sul', 
-                          avaliacao: 5.0, 
-                          numeroAvaliacoes: 456, 
-                          preco: 1500.00, 
+              PersonalCardGenerico(
+                nome: 'Renato Cariani', 
+                especialidade: 'Musculação, emagrecimento.', 
+                cidade: 'SP, São Caetano do Sul', 
+                avaliacao: 5.0, 
+                numeroAvaliacoes: 456, 
+                preco: 1500.00, 
               ),
               SizedBox(height: 20),
 

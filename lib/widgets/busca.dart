@@ -33,11 +33,17 @@ class telaDeBusca extends StatelessWidget {
           child: Column(
             children: [
               Text('Região onde deseja um personal:'),
-              buildTextField('Região: ', regionControler),
+              autocompleteTextField(
+                labelText: 'Região:', 
+                controller: regionControler, 
+                options: ['São Paulo', 'São Caetano do Sul', 'Taboão da Serra', 'Guarulhos', 'Campo Limpo', 'Embu das Artes', 'São José do Rio Preto', 'Ribeirão Preto']),
               SizedBox(height: 20),
 
               Text('Serviço buscado:'),
-              buildTextField('Tipo de serviço:', serviceControler),
+              autocompleteTextField(
+                labelText: 'Serviço desejado:', 
+                controller: serviceControler, 
+                options: ['Musculação', 'Emagrecimento', 'Fisioterapia', 'Tonificação', 'Fortalecimento', 'Corrida', 'Luta', 'Futebol']),
               SizedBox(height: 20),
 
               GenderSelection(),
