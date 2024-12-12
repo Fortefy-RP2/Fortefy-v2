@@ -174,8 +174,6 @@ class DatabaseService {
 
       for (ResultRow row in query) {
         Map rowMap = row.toColumnMap();
-        DateTime dataDaMensagem = rowMap['data'];
-        print(rowMap['data']);
 
         chatTypes.Message message = chatTypes.TextMessage(
           id: rowMap['id'].toString(),
@@ -183,7 +181,7 @@ class DatabaseService {
             id: rowMap['cpf_remetente']
           ),
           text: rowMap['texto_mensagem'],
-          createdAt: dataDaMensagem.millisecondsSinceEpoch + 3 * (Duration.millisecondsPerHour),          
+          createdAt: DateTime.now().millisecondsSinceEpoch,          
         );
 
         messages.add(message);

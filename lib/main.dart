@@ -25,7 +25,7 @@ class FortefyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //initialRoute: '/',
-      home: StartScreen(),
+      home: CadastroScreen(),
       routes: {
         '/home': (context) => HomeScreen(),
         '/aluno': (context) => AlunoScreen(),
