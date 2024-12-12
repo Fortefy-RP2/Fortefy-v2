@@ -29,8 +29,16 @@ INSERT INTO "programa_treinamento" ("cpf_aluno", "cpf_ef", "id_treino", "comenta
 VALUES
 ('06160081632', '73070164609', 1, 'Meu dia favorito!', 'Aluna tem dificuldade nesse');
 
-INSERT INTO "mensagem" ("id", "data", "texto_mensagem", "cpf_remetente", "cpf_destinatario")
-VALUES (1, now(), 'heeyaaaaaaaaaaaaaa', '73070164609', '12345678910');
+INSERT INTO fortefyschema."usuario"("cpf", "nome", "sobrenome", "data_nasc", "email", "senha")
+VALUES
+('11987654321', 'Renato', 'Cariani', '1973-07-24', 'cariani@usp.br', '123');
+
+INSERT INTO fortefyschema."educador_fisico" ("cpf_educador", "local", "cref", "descricao")
+VALUES
+('11987654321', 'São Caetano - SP', '987654321', 'Olá, meu nome é Renato e sou formado em EF');
+
+INSERT INTO fortefyschema."mensagem" ("id", "texto_mensagem", "cpf_remetente", "cpf_destinatario")
+VALUES (11, 'Bom dia! Muito obrigado pela sua preferencia. Qualquer duvida antes do treino pode me mandar mensagem aqui :)', '11987654321', '12345678911');
 
 SELECT *
 FROM fortefyschema.educador_fisico;
